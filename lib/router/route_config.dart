@@ -14,7 +14,6 @@ import 'package:flutter_base/ui/pages/profile/term_policy/term_policy_page.dart'
 import 'package:flutter_base/ui/pages/profile/update_avatar/update_avatar_page.dart';
 import 'package:flutter_base/ui/pages/profile/update_profile/update_profile_page.dart';
 import 'package:go_router/go_router.dart';
-import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 
 class AppRouter {
   AppRouter._();
@@ -62,13 +61,14 @@ class AppRouter {
         GoRoute(
           name: signIn,
           path: signIn,
-          builder: (context, state) =>  SignInScreen(
+          builder: (context, state) => SignInScreen(
             providers: [
               EmailAuthProvider(),
             ],
             actions: [
               AuthStateChangeAction<SignedIn>((context, state) {
-                AppNavigator(context: context).pushReplacementNamed(AppRouter.home);
+                AppNavigator(context: context)
+                    .pushReplacementNamed(AppRouter.home);
               }),
             ],
           ),
