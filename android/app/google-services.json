@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1020501293005",
+    "project_id": "flutter-base-e16dc",
+    "storage_bucket": "flutter-base-e16dc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020501293005:android:293e9444247b4fe11f3684",
+        "android_client_info": {
+          "package_name": "vn.newwave.flutter_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwBuVONeCjgVlkNaGflRw7qRsvUBSN4qk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
