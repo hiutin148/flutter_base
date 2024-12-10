@@ -1,3 +1,5 @@
+import 'package:alice/alice.dart';
+import 'package:alice/model/alice_configuration.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_base/common/app_navigator.dart';
@@ -19,11 +21,12 @@ class AppRouter {
   AppRouter._();
 
   static final navigationKey = GlobalKey<NavigatorState>();
+  static Alice alice = Alice(configuration: AliceConfiguration(showNotification: true, showInspectorOnShake: true));
 
   static final GoRouter router = GoRouter(
     routes: _routes,
     debugLogDiagnostics: true,
-    navigatorKey: navigationKey,
+    navigatorKey: alice.getNavigatorKey(),
   );
 
   ///main page
