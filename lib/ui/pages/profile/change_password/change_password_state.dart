@@ -1,11 +1,10 @@
 part of 'change_password_cubit.dart';
 
 class ChangePasswordState extends Equatable {
-  final LoadStatus changePasswordStatus;
-
   const ChangePasswordState({
     this.changePasswordStatus = LoadStatus.initial,
   });
+  final LoadStatus changePasswordStatus;
 
   @override
   List<Object?> get props => [

@@ -4,6 +4,19 @@ part 'movie_entity.g.dart';
 
 @JsonSerializable()
 class MovieEntity {
+  MovieEntity({
+    this.id,
+    this.title,
+    this.posterPath,
+    this.backdropPath,
+    this.voteAverage,
+    this.originalTitle,
+    this.overview,
+    this.releaseDate,
+  });
+
+  factory MovieEntity.fromJson(Map<String, dynamic> json) =>
+      _$MovieEntityFromJson(json);
   @JsonKey()
   int? id;
   @JsonKey()
@@ -20,20 +33,6 @@ class MovieEntity {
   String? overview;
   @JsonKey(name: 'release_date')
   String? releaseDate;
-
-  MovieEntity({
-    this.id,
-    this.title,
-    this.posterPath,
-    this.backdropPath,
-    this.voteAverage,
-    this.originalTitle,
-    this.overview,
-    this.releaseDate,
-  });
-
-  factory MovieEntity.fromJson(Map<String, dynamic> json) =>
-      _$MovieEntityFromJson(json);
 
   Map<String, dynamic> toJson() => _$MovieEntityToJson(this);
 

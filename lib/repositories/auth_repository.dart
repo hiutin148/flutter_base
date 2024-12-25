@@ -1,7 +1,6 @@
 import 'package:flutter_base/database/secure_storage_helper.dart';
+import 'package:flutter_base/models/entities/token_entity.dart';
 import 'package:flutter_base/network/api_client.dart';
-
-import '../models/entities/token_entity.dart';
 
 abstract class AuthRepository {
   Future<TokenEntity?> getToken();
@@ -20,13 +19,12 @@ abstract class AuthRepository {
 }
 
 class AuthRepositoryImpl extends AuthRepository {
-  ApiClient apiClient;
-
   AuthRepositoryImpl({required this.apiClient});
+  ApiClient apiClient;
 
   @override
   Future<TokenEntity?> getToken() async {
-    return await SecureStorageHelper.instance.getToken();
+    return SecureStorageHelper.instance.getToken();
   }
 
   @override
@@ -42,9 +40,11 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<TokenEntity?> signIn(String username, String password) async {
     //Todo
-    await Future.delayed(const Duration(seconds: 2));
+    await Future<void>.delayed(const Duration(seconds: 2));
     return TokenEntity(
-        accessToken: 'app_access_token', refreshToken: 'app_refresh_token');
+      accessToken: 'app_access_token',
+      refreshToken: 'app_refresh_token',
+    );
   }
 
   @override
@@ -53,7 +53,7 @@ class AuthRepositoryImpl extends AuthRepository {
     required String newPassword,
     required String confirmPassword,
   }) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future<void>.delayed(const Duration(seconds: 2));
     return true;
   }
 }

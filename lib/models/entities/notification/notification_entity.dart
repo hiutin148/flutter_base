@@ -4,6 +4,17 @@ part 'notification_entity.g.dart';
 
 @JsonSerializable()
 class NotificationEntity {
+  NotificationEntity({
+    this.id = 0,
+    this.isRead = false,
+    this.title,
+    this.message,
+    this.createdAt,
+    this.imageUrl,
+  });
+
+  factory NotificationEntity.fromJson(Map<String, dynamic> json) =>
+      _$NotificationEntityFromJson(json);
   @JsonKey()
   int id;
   @JsonKey()
@@ -16,18 +27,6 @@ class NotificationEntity {
   DateTime? createdAt;
   @JsonKey()
   String? imageUrl;
-
-  NotificationEntity({
-    this.id = 0,
-    this.isRead = false,
-    this.title,
-    this.message,
-    this.createdAt,
-    this.imageUrl,
-  });
-
-  factory NotificationEntity.fromJson(Map<String, dynamic> json) =>
-      _$NotificationEntityFromJson(json);
 
   Map<String, dynamic> toJson() => _$NotificationEntityToJson(this);
 

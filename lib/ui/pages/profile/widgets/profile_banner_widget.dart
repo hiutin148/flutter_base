@@ -6,12 +6,11 @@ import 'package:flutter_base/ui/widgets/images/app_circle_avatar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileBannerWidget extends StatelessWidget {
-  final VoidCallback onAvatarPressed;
-
   const ProfileBannerWidget({
-    super.key,
     required this.onAvatarPressed,
+    super.key,
   });
+  final VoidCallback onAvatarPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +26,11 @@ class ProfileBannerWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(AppDimens.paddingNormal),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               AppCircleAvatar(
-                  size: const Size(80, 80), onPressed: onAvatarPressed),
+                size: const Size(80, 80),
+                onPressed: onAvatarPressed,
+              ),
               const SizedBox(width: AppDimens.paddingNormal),
               Expanded(
                 child: Column(

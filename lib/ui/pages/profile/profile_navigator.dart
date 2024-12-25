@@ -5,7 +5,7 @@ class ProfileNavigator extends AppNavigator {
   ProfileNavigator({required super.context});
 
   Future<bool> openUpdateProfile() async {
-    var result = await pushNamed(AppRouter.updateProfile);
+    final result = await pushNamed(AppRouter.updateProfile);
     return result as bool;
   }
 

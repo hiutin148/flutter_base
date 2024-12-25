@@ -7,14 +7,13 @@ import 'package:flutter_base/common/app_text_styles.dart';
 /// Page with TickerProviderStateMixin
 
 class AppTabBar extends StatelessWidget {
-  final TabController? tabController;
-  final List<String> tabItems;
-
   const AppTabBar({
     super.key,
     this.tabController,
     this.tabItems = const [],
   });
+  final TabController? tabController;
+  final List<String> tabItems;
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +21,11 @@ class AppTabBar extends StatelessWidget {
       height: 40,
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-          // color: Theme.of(context),
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          // boxShadow: AppShadow.boxShadow,
-          border: Border.all(color: AppColors.border)),
+        // color: Theme.of(context),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        // boxShadow: AppShadow.boxShadow,
+        border: Border.all(color: AppColors.border),
+      ),
       child: TabBar(
         controller: tabController,
         tabs: buildTabItems(),
@@ -42,8 +42,8 @@ class AppTabBar extends StatelessWidget {
   }
 
   List<Widget> buildTabItems() {
-    List<Widget> items = [];
-    for (int i = 0; i < (tabItems).length; i++) {
+    final items = <Widget>[];
+    for (var i = 0; i < tabItems.length; i++) {
       items.add(buildTabItem(tabItems[i], i));
     }
     return items;

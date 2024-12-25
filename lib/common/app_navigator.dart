@@ -1,16 +1,15 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_base/common/app_colors.dart';
 import 'package:flutter_base/common/app_text_styles.dart';
 import 'package:flutter_base/router/route_config.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
-import 'app_colors.dart';
-
 class AppNavigator {
-  BuildContext context;
-
   AppNavigator({required this.context});
+
+  BuildContext context;
 
   void pop<T extends Object?>([T? result]) {
     GoRouter.of(context).pop(result);
@@ -76,10 +75,10 @@ class AppNavigator {
 
   /// Show dialog
   Future<void> showSimpleDialog({
-    String message = "",
-    String? textConfirm = "OK",
+    String message = '',
+    String? textConfirm = 'OK',
     String? textCancel,
-    barrierDismissible = false,
+    bool barrierDismissible = false,
     VoidCallback? onConfirm,
     VoidCallback? onCancel,
   }) {
@@ -88,15 +87,14 @@ class AppNavigator {
       barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
-          insetPadding: const EdgeInsets.all(0),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          insetPadding: EdgeInsets.zero,
           contentPadding: EdgeInsets.zero,
           content: Container(
             width: MediaQuery.sizeOf(context).width - 32,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(4.0),
+              borderRadius: BorderRadius.circular(4),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +103,11 @@ class AppNavigator {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 20, top: 20, right: 20, bottom: 30),
+                    left: 20,
+                    top: 20,
+                    right: 20,
+                    bottom: 30,
+                  ),
                   child: Text(message, style: AppTextStyle.blackS14),
                 ),
                 Container(
@@ -130,9 +132,6 @@ class AppNavigator {
                               side: BorderSide.none,
                               padding: EdgeInsets.zero,
                               elevation: 0,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.zero),
-                              ),
                             ),
                             child: Text(
                               textConfirm,
@@ -151,9 +150,7 @@ class AppNavigator {
                               side: BorderSide.none,
                               padding: EdgeInsets.zero,
                               elevation: 0,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.zero),
-                              ),
+                              shape: const RoundedRectangleBorder(),
                             ),
                             child: Text(
                               textCancel,
@@ -163,7 +160,7 @@ class AppNavigator {
                         ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -174,13 +171,13 @@ class AppNavigator {
 
   /// Show error flushbar
   void showErrorFlushbar({required String message}) {
-    Flushbar(
+    Flushbar<dynamic>(
       message: message,
       flushbarStyle: FlushbarStyle.GROUNDED,
       flushbarPosition: FlushbarPosition.TOP,
       icon: const Icon(
         Icons.error_outline,
-        size: 28.0,
+        size: 28,
         color: Colors.white,
       ),
       titleColor: Colors.white,
@@ -190,13 +187,13 @@ class AppNavigator {
   }
 
   void showSuccessFlushbar({required String message}) {
-    Flushbar(
+    Flushbar<dynamic>(
       message: message,
       flushbarStyle: FlushbarStyle.GROUNDED,
       flushbarPosition: FlushbarPosition.TOP,
       icon: const Icon(
         Icons.check_circle_outline,
-        size: 28.0,
+        size: 28,
         color: Colors.white,
       ),
       titleColor: Colors.white,

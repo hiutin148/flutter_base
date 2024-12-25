@@ -4,15 +4,6 @@ part 'sign_up_param.g.dart';
 
 @JsonSerializable()
 class SignUpParam {
-  @JsonKey()
-  final String? email;
-  @JsonKey()
-  final String? name;
-  @JsonKey()
-  final String? password;
-  @JsonKey()
-  final String? phone;
-
   SignUpParam({
     this.email,
     this.name,
@@ -22,6 +13,14 @@ class SignUpParam {
 
   factory SignUpParam.fromJson(Map<String, dynamic> json) =>
       _$SignUpParamFromJson(json);
+  @JsonKey()
+  final String? email;
+  @JsonKey()
+  final String? name;
+  @JsonKey()
+  final String? password;
+  @JsonKey()
+  final String? phone;
 
   Map<String, dynamic> toJson() => _$SignUpParamToJson(this);
 }

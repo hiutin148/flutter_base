@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_base/common/app_dimens.dart';
 import 'package:flutter_base/models/enums/load_status.dart';
 import 'package:flutter_base/repositories/auth_repository.dart';
+import 'package:flutter_base/ui/pages/profile/change_password/change_password_cubit.dart';
+import 'package:flutter_base/ui/pages/profile/change_password/change_password_navigator.dart';
 import 'package:flutter_base/ui/widgets/appbar/app_bar_widget.dart';
 import 'package:flutter_base/ui/widgets/buttons/app_button.dart';
 import 'package:flutter_base/ui/widgets/text/app_lable.dart';
 import 'package:flutter_base/ui/widgets/text_field/app_password_text_field.dart';
 import 'package:flutter_base/utils/app_validartor.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'change_password_cubit.dart';
-import 'change_password_navigator.dart';
 
 class ChangePasswordPage extends StatelessWidget {
   const ChangePasswordPage({super.key});
@@ -43,12 +42,9 @@ class _ChangePasswordChildPageState extends State<ChangePasswordChildPage> {
   final _currentPasswordTextController = TextEditingController();
   final _newPasswordTextController = TextEditingController();
   final _confirmPasswordTextController = TextEditingController();
-  final _obscureCurrentPasswordController =
-      ObscureTextController(obscureText: true);
-  final _obscureNewPasswordController =
-      ObscureTextController(obscureText: true);
-  final _obscureConfirmPasswordController =
-      ObscureTextController(obscureText: true);
+  final _obscureCurrentPasswordController = ObscureTextController();
+  final _obscureNewPasswordController = ObscureTextController();
+  final _obscureConfirmPasswordController = ObscureTextController();
   final _passwordFormKey = GlobalKey<FormState>();
   final _confirmPasswordFormKey = GlobalKey<FormState>();
 
@@ -102,9 +98,7 @@ class _ChangePasswordChildPageState extends State<ChangePasswordChildPage> {
             child: AppPasswordTextField(
               controller: _newPasswordTextController,
               obscureTextController: _obscureNewPasswordController,
-              validator: (value) {
-                return AppValidator.validatePassword(value);
-              },
+              validator: AppValidator.validatePassword,
               onFieldSubmitted: (_) {
                 _passwordFormKey.currentState?.validate();
               },
@@ -123,7 +117,9 @@ class _ChangePasswordChildPageState extends State<ChangePasswordChildPage> {
               controller: _confirmPasswordTextController,
               validator: (value) {
                 return AppValidator.validateConfirmPassword(
-                    _newPasswordTextController.text, value);
+                  _newPasswordTextController.text,
+                  value,
+                );
               },
               obscureTextController: _obscureConfirmPasswordController,
               onFieldSubmitted: (_) {

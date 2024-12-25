@@ -1,12 +1,6 @@
 part of 'update_avatar_cubit.dart';
 
 class UpdateAvatarState extends Equatable {
-  final LoadStatus userStatus;
-  final UserEntity? user;
-  final File? image;
-  final LoadStatus imageCollectionStatus;
-  final LoadStatus imageCameraStatus;
-
   const UpdateAvatarState({
     this.userStatus = LoadStatus.initial,
     this.user,
@@ -14,6 +8,11 @@ class UpdateAvatarState extends Equatable {
     this.imageCollectionStatus = LoadStatus.initial,
     this.imageCameraStatus = LoadStatus.initial,
   });
+  final LoadStatus userStatus;
+  final UserEntity? user;
+  final File? image;
+  final LoadStatus imageCollectionStatus;
+  final LoadStatus imageCameraStatus;
 
   @override
   List<Object?> get props => [

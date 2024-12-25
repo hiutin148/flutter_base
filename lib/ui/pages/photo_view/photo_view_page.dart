@@ -1,25 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_base/ui/pages/photo_view/photo_view_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-import 'photo_view_cubit.dart';
-
 class PhotoViewArguments {
-  List<String> images;
-
   PhotoViewArguments({
     required this.images,
   });
+  List<String> images;
 }
 
 class PhotoViewPage extends StatelessWidget {
-  final PhotoViewArguments arguments;
-
   const PhotoViewPage({
-    super.key,
     required this.arguments,
+    super.key,
   });
+  final PhotoViewArguments arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +32,11 @@ class PhotoViewPage extends StatelessWidget {
 }
 
 class PhotoViewChildPage extends StatefulWidget {
-  final List<String> images;
-
   const PhotoViewChildPage({
-    super.key,
     required this.images,
+    super.key,
   });
+  final List<String> images;
 
   @override
   State<PhotoViewChildPage> createState() => _PhotoViewChildPageState();
@@ -64,30 +60,32 @@ class _PhotoViewChildPageState extends State<PhotoViewChildPage> {
   }
 
   Widget _buildBodyWidget() {
-    return Stack(children: [
-      PhotoViewGallery.builder(
-        scrollPhysics: const BouncingScrollPhysics(),
-        builder: (BuildContext context, int index) {
-          return PhotoViewGalleryPageOptions(
-            imageProvider: CachedNetworkImageProvider(widget.images[index]),
-          );
-        },
-        itemCount: widget.images.length,
-      ),
-      Positioned(
-        top: 40,
-        right: 20,
-        child: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
+    return Stack(
+      children: [
+        PhotoViewGallery.builder(
+          scrollPhysics: const BouncingScrollPhysics(),
+          builder: (BuildContext context, int index) {
+            return PhotoViewGalleryPageOptions(
+              imageProvider: CachedNetworkImageProvider(widget.images[index]),
+            );
           },
-          icon: const Icon(
-            Icons.close,
-            color: Colors.white,
+          itemCount: widget.images.length,
+        ),
+        Positioned(
+          top: 40,
+          right: 20,
+          child: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.close,
+              color: Colors.white,
+            ),
           ),
         ),
-      )
-    ]);
+      ],
+    );
   }
 
   @override

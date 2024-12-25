@@ -1,13 +1,12 @@
 part of 'user_cubit.dart';
 
 class UserState extends Equatable {
-  final UserEntity? user;
-  final LoadStatus fetchUserStatus;
-
   const UserState({
     this.user,
     this.fetchUserStatus = LoadStatus.initial,
   });
+  final UserEntity? user;
+  final LoadStatus fetchUserStatus;
 
   @override
   List<Object?> get props => [

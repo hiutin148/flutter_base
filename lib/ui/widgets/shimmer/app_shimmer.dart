@@ -2,14 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AppShimmer extends StatelessWidget {
-  final double width;
-  final double height;
-  final double cornerRadius;
-  final EdgeInsets margin;
-  final EdgeInsets padding;
-  final Color? baseColor;
-  final Color? highlightColor;
-
   const AppShimmer({
     super.key,
     this.width = double.infinity,
@@ -20,6 +12,13 @@ class AppShimmer extends StatelessWidget {
     this.baseColor,
     this.highlightColor,
   });
+  final double width;
+  final double height;
+  final double cornerRadius;
+  final EdgeInsets margin;
+  final EdgeInsets padding;
+  final Color? baseColor;
+  final Color? highlightColor;
 
   @override
   Widget build(BuildContext context) {

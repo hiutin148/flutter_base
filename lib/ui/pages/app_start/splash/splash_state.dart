@@ -2,11 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_base/models/enums/load_status.dart';
 
 class SplashState extends Equatable {
-  final LoadStatus fetchProfileStatus;
-
   const SplashState({
     this.fetchProfileStatus = LoadStatus.initial,
   });
+  final LoadStatus fetchProfileStatus;
 
   SplashState copyWith({
     LoadStatus? fetchProfileStatus,

@@ -7,22 +7,18 @@ extension HomeSectionExtension on MovieCategory {
   String get title {
     switch (this) {
       case MovieCategory.trending:
-        return "Trending";
+        return 'Trending';
       case MovieCategory.upcoming:
-        return "Upcoming";
-      default:
-        return "";
+        return 'Upcoming';
     }
   }
 
   String get typeName {
     switch (this) {
       case MovieCategory.trending:
-        return "Movies";
+        return 'Movies';
       case MovieCategory.upcoming:
-        return "Movies";
-      default:
-        return "";
+        return 'Movies';
     }
   }
 }

@@ -13,16 +13,15 @@ class AppDropdownController extends ValueNotifier<int> {
 }
 
 class AppDropdownPicker extends StatelessWidget {
+  const AppDropdownPicker({
+    required this.controller,
+    required this.options,
+    super.key,
+    this.hintText = 'Select',
+  });
   final AppDropdownController controller;
   final List<String> options;
   final String hintText;
-
-  const AppDropdownPicker({
-    super.key,
-    required this.controller,
-    required this.options,
-    this.hintText = "Select",
-  });
 
   @override
   Widget build(BuildContext context) {

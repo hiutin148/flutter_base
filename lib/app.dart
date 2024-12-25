@@ -1,25 +1,23 @@
-import 'package:alice/alice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_base/common/app_themes.dart';
 import 'package:flutter_base/configs/app_configs.dart';
+import 'package:flutter_base/generated/l10n.dart';
 import 'package:flutter_base/global_blocs/auth/auth_cubit.dart';
+import 'package:flutter_base/global_blocs/player_controller/player_controller_cubit.dart';
 import 'package:flutter_base/global_blocs/setting/app_setting_cubit.dart';
 import 'package:flutter_base/global_blocs/user/user_cubit.dart';
 import 'package:flutter_base/models/enums/language.dart';
+import 'package:flutter_base/network/api_client.dart';
+import 'package:flutter_base/network/api_util.dart';
+import 'package:flutter_base/repositories/auth_repository.dart';
+import 'package:flutter_base/repositories/track_repository.dart';
+import 'package:flutter_base/repositories/user_repository.dart';
+import 'package:flutter_base/router/route_config.dart';
 import 'package:flutter_base/ui/widgets/loading/app_loading_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-
-import 'generated/l10n.dart';
-import 'network/api_client.dart';
-import 'network/api_util.dart';
-import 'repositories/auth_repository.dart';
-import 'repositories/movie_repository.dart';
-import 'repositories/notification_repository.dart';
-import 'repositories/user_repository.dart';
-import 'router/route_config.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -32,12 +30,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late ApiClient _apiClient;
-  late ApiClient _apiMocKyClient;
 
   @override
   void initState() {
     _apiClient = ApiUtil.apiClient;
-    _apiMocKyClient = ApiUtil.mocKyApiClient;
     super.initState();
   }
 
@@ -54,33 +50,46 @@ class _MyAppState extends State<MyApp> {
     ]);
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<AuthRepository>(create: (context) {
-          return AuthRepositoryImpl(apiClient: _apiClient);
-        }),
-        RepositoryProvider<MovieRepository>(create: (context) {
-          return MovieRepositoryImpl(apiClient: _apiClient);
-        }),
-        RepositoryProvider<UserRepository>(create: (context) {
-          return UserRepositoryImpl(apiClient: _apiClient);
-        }),
-        RepositoryProvider<NotificationRepository>(create: (context) {
-          return NotificationRepositoryImpl(apiClient: _apiMocKyClient);
-        }),
+        RepositoryProvider<AuthRepository>(
+          create: (context) {
+            return AuthRepositoryImpl(apiClient: _apiClient);
+          },
+        ),
+        RepositoryProvider<UserRepository>(
+          create: (context) {
+            return UserRepositoryImpl(apiClient: _apiClient);
+          },
+        ),
+        RepositoryProvider<TrackRepository>(
+          create: (context) {
+            return TrackRepositoryImpl(apiClient: _apiClient);
+          },
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<AuthCubit>(create: (context) {
-            final authRepo = RepositoryProvider.of<AuthRepository>(context);
-            return AuthCubit(authRepo: authRepo);
-          }),
-          BlocProvider<UserCubit>(create: (context) {
-            final userRepository =
-                RepositoryProvider.of<UserRepository>(context);
-            return UserCubit(userRepository: userRepository);
-          }),
-          BlocProvider<AppSettingCubit>(create: (context) {
-            return AppSettingCubit();
-          }),
+          BlocProvider<AuthCubit>(
+            create: (context) {
+              final authRepo = RepositoryProvider.of<AuthRepository>(context);
+              return AuthCubit(authRepo: authRepo);
+            },
+          ),
+          BlocProvider<UserCubit>(
+            create: (context) {
+              final userRepository = RepositoryProvider.of<UserRepository>(context);
+              return UserCubit(userRepository: userRepository);
+            },
+          ),
+          BlocProvider<AppSettingCubit>(
+            create: (context) {
+              return AppSettingCubit();
+            },
+          ),
+          BlocProvider<PlayerControllerCubit>(
+            create: (context) {
+              return PlayerControllerCubit()..initializeAudioPlayer();
+            },
+          ),
         ],
         child: BlocBuilder<AppSettingCubit, AppSettingState>(
           buildWhen: (prev, current) {
@@ -92,15 +101,15 @@ class _MyAppState extends State<MyApp> {
                 _hideKeyboard(context);
               },
               child: GlobalLoaderOverlay(
-                useDefaultLoading: false,
                 overlayWidgetBuilder: (_) {
                   return Center(
                     child: Container(
                       color: Colors.grey,
                       width: 40,
                       height: 40,
-                      child:
-                          const Center(child: AppCircularProgressIndicator()),
+                      child: const Center(
+                        child: AppCircularProgressIndicator(),
+                      ),
                     ),
                   );
                 },
@@ -119,6 +128,7 @@ class _MyAppState extends State<MyApp> {
     required Locale locale,
   }) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: AppConfigs.appName,
       theme: AppThemes().theme,
       themeMode: ThemeMode.dark,
@@ -135,7 +145,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _hideKeyboard(BuildContext context) {
-    FocusScopeNode currentFocus = FocusScope.of(context);
+    final currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
       FocusManager.instance.primaryFocus?.unfocus();
     }

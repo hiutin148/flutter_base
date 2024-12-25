@@ -1,6 +1,5 @@
+import 'package:flutter_base/ui/pages/main/main_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'main_state.dart';
 
 class MainCubit extends Cubit<MainState> {
   MainCubit() : super(const MainState());

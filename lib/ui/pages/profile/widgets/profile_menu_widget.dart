@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_base/models/enums/profile_menu.dart';
 
 class ProfileMenuWidget extends StatelessWidget {
-  final ProfileMenu menu;
-  final VoidCallback onMenuTapped;
-
   const ProfileMenuWidget({
-    super.key,
     required this.menu,
     required this.onMenuTapped,
+    super.key,
   });
+  final ProfileMenu menu;
+  final VoidCallback onMenuTapped;
 
   @override
   Widget build(BuildContext context) {

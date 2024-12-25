@@ -4,9 +4,9 @@ import 'package:flutter_base/common/app_images.dart';
 import 'package:flutter_base/database/share_preferences_helper.dart';
 import 'package:flutter_base/global_blocs/setting/app_setting_cubit.dart';
 import 'package:flutter_base/repositories/auth_repository.dart';
+import 'package:flutter_base/ui/pages/app_start/splash/splash_cubit.dart';
+import 'package:flutter_base/ui/pages/app_start/splash/splash_navigator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'splash_cubit.dart';
-import 'splash_navigator.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -44,8 +44,8 @@ class _SplashChildPageState extends State<SplashChildPage> {
     _setup();
   }
 
-  void _setup() async {
-    await Future.delayed(const Duration(seconds: 1));
+  Future<void> _setup() async {
+    await Future<void>.delayed(const Duration(seconds: 1));
     await _requestPermissions();
     await _appSettingCubit.getInitialSetting();
     await _runOnboardingIfNeed();

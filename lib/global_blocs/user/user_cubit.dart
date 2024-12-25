@@ -7,11 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
-  final UserRepository userRepository;
-
   UserCubit({
     required this.userRepository,
   }) : super(const UserState());
+  final UserRepository userRepository;
 
   Future<void> fetchUser() async {
     if (state.fetchUserStatus == LoadStatus.loading) {
@@ -20,10 +19,12 @@ class UserCubit extends Cubit<UserState> {
     emit(state.copyWith(fetchUserStatus: LoadStatus.loading));
     try {
       final user = await userRepository.getProfile();
-      emit(state.copyWith(
-        fetchUserStatus: LoadStatus.success,
-        user: user,
-      ));
+      emit(
+        state.copyWith(
+          fetchUserStatus: LoadStatus.success,
+          user: user,
+        ),
+      );
     } catch (e) {
       emit(state.copyWith(fetchUserStatus: LoadStatus.failure));
     }

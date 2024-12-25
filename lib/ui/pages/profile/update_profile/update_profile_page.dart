@@ -3,6 +3,7 @@ import 'package:flutter_base/common/app_dimens.dart';
 import 'package:flutter_base/generated/l10n.dart';
 import 'package:flutter_base/global_blocs/user/user_cubit.dart';
 import 'package:flutter_base/models/enums/gender_type.dart';
+import 'package:flutter_base/ui/pages/profile/update_profile/update_profile_cubit.dart';
 import 'package:flutter_base/ui/pages/profile/update_profile/update_profile_navigator.dart';
 import 'package:flutter_base/ui/widgets/appbar/app_bar_widget.dart';
 import 'package:flutter_base/ui/widgets/buttons/app_button.dart';
@@ -13,8 +14,6 @@ import 'package:flutter_base/ui/widgets/text_field/app_text_field.dart';
 import 'package:flutter_base/utils/app_date_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-
-import 'update_profile_cubit.dart';
 
 class UpdateProfilePage extends StatelessWidget {
   const UpdateProfilePage({
@@ -63,7 +62,7 @@ class _UpdateProfileChildPageState extends State<UpdateProfileChildPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(
-        title: "Update Profile",
+        title: 'Update Profile',
       ),
       body: SafeArea(
         child: _buildBodyWidget(),
@@ -89,12 +88,12 @@ class _UpdateProfileChildPageState extends State<UpdateProfileChildPage>
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const AppLabel(
-                text: "Name",
+                text: 'Name',
                 margin: EdgeInsets.only(bottom: AppDimens.paddingSmall),
               ),
               AppTextField(controller: textNameController),
               const AppLabel(
-                text: "Birthday",
+                text: 'Birthday',
                 margin: EdgeInsets.only(
                   top: AppDimens.paddingNormal,
                   bottom: AppDimens.paddingSmall,
@@ -105,7 +104,7 @@ class _UpdateProfileChildPageState extends State<UpdateProfileChildPage>
                 suffixIcon: const Icon(Icons.edit_calendar),
               ),
               const AppLabel(
-                text: "Gender",
+                text: 'Gender',
                 margin: EdgeInsets.only(
                   top: AppDimens.paddingNormal,
                   bottom: AppDimens.paddingSmall,
@@ -114,7 +113,7 @@ class _UpdateProfileChildPageState extends State<UpdateProfileChildPage>
               AppDropdownPicker(
                 controller: genderController,
                 options: GenderType.values.map((e) => e.text).toList(),
-              )
+              ),
             ],
           );
         },

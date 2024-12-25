@@ -6,17 +6,6 @@ part 'user_entity.g.dart';
 
 @JsonSerializable()
 class UserEntity {
-  @JsonKey()
-  int? id;
-  @JsonKey()
-  String? username;
-  @JsonKey()
-  DateTime? birthday;
-  @JsonKey()
-  String? avatarUrl;
-  @JsonKey()
-  String? email;
-
   UserEntity({
     this.id,
     this.username,
@@ -28,10 +17,10 @@ class UserEntity {
   factory UserEntity.mockData() {
     return UserEntity(
       id: 12345678,
-      username: "NWS",
+      username: 'NWS',
       birthday: DateTime.now(),
-      avatarUrl: "https://picsum.photos/400",
-      email: "mobile@newwave.vn",
+      avatarUrl: 'https://picsum.photos/400',
+      email: 'mobile@newwave.vn',
     );
   }
 
@@ -41,6 +30,16 @@ class UserEntity {
 
   factory UserEntity.fromJson(Map<String, dynamic> json) =>
       _$UserEntityFromJson(json);
+  @JsonKey()
+  int? id;
+  @JsonKey()
+  String? username;
+  @JsonKey()
+  DateTime? birthday;
+  @JsonKey()
+  String? avatarUrl;
+  @JsonKey()
+  String? email;
 
   Map<String, dynamic> toJson() => _$UserEntityToJson(this);
 }

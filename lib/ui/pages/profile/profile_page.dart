@@ -4,15 +4,14 @@ import 'package:flutter_base/common/app_dimens.dart';
 import 'package:flutter_base/global_blocs/auth/auth_cubit.dart';
 import 'package:flutter_base/models/enums/load_status.dart';
 import 'package:flutter_base/models/enums/profile_menu.dart';
+import 'package:flutter_base/ui/pages/profile/profile_cubit.dart';
 import 'package:flutter_base/ui/pages/profile/profile_navigator.dart';
-import 'package:flutter_base/ui/widgets/common/app_version_widget.dart';
-import 'package:flutter_base/ui/pages/profile/widgets/profile_menu_widget.dart';
 import 'package:flutter_base/ui/pages/profile/widgets/profile_banner_widget.dart';
+import 'package:flutter_base/ui/pages/profile/widgets/profile_menu_widget.dart';
+import 'package:flutter_base/ui/widgets/common/app_version_widget.dart';
 import 'package:flutter_base/ui/widgets/divider/app_divider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
-import 'profile_cubit.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -81,7 +80,6 @@ class _ProfileTabPageState extends State<_ProfileTabPage> {
 
   Widget _buildBodyWidget() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ProfileBannerWidget(

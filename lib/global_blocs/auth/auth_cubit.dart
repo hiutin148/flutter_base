@@ -7,17 +7,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthRepository authRepo;
-
   AuthCubit({
     required this.authRepo,
   }) : super(const AuthState());
+  AuthRepository authRepo;
 
   ///Sign Out
   Future<void> signOut() async {
     emit(state.copyWith(signOutStatus: LoadStatus.loading));
     try {
-      await Future.delayed(const Duration(seconds: 2));
+      await Future<void>.delayed(const Duration(seconds: 2));
       await authRepo.removeToken();
       emit(state.copyWith(signOutStatus: LoadStatus.success));
     } catch (e) {
@@ -27,6 +26,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> deleteAccount() async {
-    //Todo
+    // TODO: asdad
   }
 }

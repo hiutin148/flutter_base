@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_base/common/app_dimens.dart';
 import 'package:flutter_base/generated/l10n.dart';
 import 'package:flutter_base/global_blocs/auth/auth_cubit.dart';
+import 'package:flutter_base/ui/pages/profile/delete_account/delete_account_cubit.dart';
+import 'package:flutter_base/ui/pages/profile/delete_account/delete_account_navigator.dart';
 import 'package:flutter_base/ui/widgets/appbar/app_bar_widget.dart';
 import 'package:flutter_base/ui/widgets/buttons/app_button.dart';
 import 'package:flutter_base/ui/widgets/text/app_lable.dart';
 import 'package:flutter_base/ui/widgets/text_field/app_text_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'delete_account_cubit.dart';
-import 'delete_account_navigator.dart';
 
 class DeleteAccountPage extends StatelessWidget {
   const DeleteAccountPage({

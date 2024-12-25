@@ -1,11 +1,10 @@
 part of 'auth_cubit.dart';
 
 class AuthState extends Equatable {
-  final LoadStatus signOutStatus;
-
   const AuthState({
     this.signOutStatus = LoadStatus.initial,
   });
+  final LoadStatus signOutStatus;
 
   @override
   List<Object?> get props => [

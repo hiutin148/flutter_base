@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/models/enums/onboarding_step.dart';
+import 'package:flutter_base/ui/pages/app_start/onboarding/onboarding_cubit.dart';
+import 'package:flutter_base/ui/pages/app_start/onboarding/onboarding_navigator.dart';
+import 'package:flutter_base/ui/pages/app_start/onboarding/widgets/onboarding_footer.dart';
+import 'package:flutter_base/ui/pages/app_start/onboarding/widgets/onboarding_sub_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'onboarding_cubit.dart';
-import 'onboarding_navigator.dart';
-import 'widgets/onboarding_footer.dart';
-import 'widgets/onboarding_sub_page.dart';
-
 class OnboardingPage extends StatelessWidget {
-  static const router = 'onBoarding';
-
   const OnboardingPage({super.key});
+  static const router = 'onBoarding';
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,7 @@ class OnboardingChildPage extends StatefulWidget {
 
 class _OnboardingChildPageState extends State<OnboardingChildPage> {
   late OnboardingCubit _cubit;
-  final PageController _pageViewController = PageController(initialPage: 0);
+  final PageController _pageViewController = PageController();
   final OnboardingController _onboardingController = OnboardingController();
 
   @override
@@ -80,14 +78,15 @@ class _OnboardingChildPageState extends State<OnboardingChildPage> {
                 totalStep: OnboardingStep.values.length,
                 controller: _onboardingController,
                 onNextTapped: () {
-                  _cubit.jumpNextStep();
-                  _cubit.setOnboarded();
+                  _cubit
+                    ..jumpNextStep()
+                    ..setOnboarded();
                 },
                 onSkipTapped: () {
                   _cubit.navigator.pop();
                   _cubit.setOnboarded();
                 },
-              )
+              ),
             ],
           ),
         ),

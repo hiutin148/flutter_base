@@ -3,11 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_base/configs/app_configs.dart';
 import 'package:flutter_base/models/entities/token_entity.dart';
 import 'package:flutter_base/models/response/object_response.dart';
+import 'package:flutter_base/network/api_client.dart';
+import 'package:flutter_base/network/api_interceptors.dart';
 import 'package:flutter_base/router/route_config.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
-import 'api_client.dart';
-import 'api_interceptors.dart';
 
 class ApiUtil {
   static Dio? dio;
@@ -15,20 +14,22 @@ class ApiUtil {
   static Dio getDio() {
     if (dio == null) {
       /// Create Alice Dio Adapter
-      AliceDioAdapter aliceDioAdapter = AliceDioAdapter();
+      final aliceDioAdapter = AliceDioAdapter();
 
       /// Add adapter to Alice
       AppRouter.alice.addAdapter(aliceDioAdapter);
       dio = Dio();
+
       dio!.options.connectTimeout = const Duration(milliseconds: 60000);
       dio!.interceptors.add(ApiInterceptors());
       dio!.interceptors.add(aliceDioAdapter);
-      dio!.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        compact: false,
-      ));
+      dio!.interceptors.add(
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          compact: false,
+        ),
+      );
     }
     return dio!;
   }
@@ -47,15 +48,16 @@ class ApiUtil {
     if (token == null) return null;
     final dio = Dio();
     dio.options.connectTimeout = const Duration(milliseconds: 60000);
-    dio.options.headers['Authorization'] = "Bearer $token";
-    dio.options.headers['connection'] = "keep-alive";
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    dio.options.headers['connection'] = 'keep-alive';
     dio.interceptors.add(PrettyDioLogger());
-    final res = await dio.get('${AppConfigs.mocKyBaseUrl}/refresh-token');
+    final res = await dio
+        .get<Response<dynamic>>('${AppConfigs.mocKyBaseUrl}/refresh-token');
     final value = res.data == null
         ? null
         : ObjectResponse<TokenEntity>.fromJson(
-            res.data!,
-            (json) => TokenEntity.fromJson(json as Map<String, dynamic>),
+            res.data! as Map<String, dynamic>,
+            (json) => TokenEntity.fromJson(json! as Map<String, dynamic>),
           );
     if (value != null && value.data != null) {
       return value.data;

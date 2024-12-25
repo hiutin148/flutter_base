@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_base/common/app_colors.dart';
 
 class AppThemes {
+  AppThemes({
+    this.isDarkMode = false,
+    this.primaryColor = AppColors.primary,
+    this.secondaryColor = AppColors.secondary,
+  }) : brightness = isDarkMode ? Brightness.dark : Brightness.light;
   static const _font = 'app.dart';
 
   bool isDarkMode;
@@ -9,33 +14,36 @@ class AppThemes {
   Color primaryColor;
   Color secondaryColor;
 
-  AppThemes({
-    this.isDarkMode = false,
-    this.primaryColor = AppColors.primary,
-    this.secondaryColor = AppColors.secondary,
-  }) : brightness = isDarkMode ? Brightness.dark : Brightness.light;
-
   Color get backgroundColor => AppColors.background;
 
   TextTheme get textTheme {
-    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final textColor = isDarkMode ? Colors.white : AppColors.black;
     return TextTheme(
-      displayLarge: TextStyle(fontSize: 96.0, color: textColor),
-      displayMedium: TextStyle(fontSize: 60.0, color: textColor),
-      displaySmall: TextStyle(fontSize: 48.0, color: textColor),
-      headlineMedium: TextStyle(fontSize: 34.0, color: textColor),
-      headlineSmall: TextStyle(fontSize: 24.0, color: textColor),
+      displayLarge: TextStyle(fontSize: 96, color: textColor),
+      displayMedium: TextStyle(fontSize: 60, color: textColor),
+      displaySmall: TextStyle(fontSize: 48, color: textColor),
+      headlineMedium: TextStyle(fontSize: 34, color: textColor),
+      headlineSmall: TextStyle(fontSize: 24, color: textColor),
       titleLarge: TextStyle(
-          fontSize: 20.0, color: textColor, fontWeight: FontWeight.w500),
-      titleMedium: TextStyle(fontSize: 16.0, color: textColor),
+        fontSize: 20,
+        color: textColor,
+        fontWeight: FontWeight.w500,
+      ),
+      titleMedium: TextStyle(fontSize: 16, color: textColor),
       titleSmall: TextStyle(
-          fontSize: 14.0, color: textColor, fontWeight: FontWeight.w500),
-      bodyLarge: TextStyle(fontSize: 16.0, color: textColor),
-      bodyMedium: TextStyle(fontSize: 14.0, color: textColor),
-      bodySmall: TextStyle(fontSize: 12.0, color: textColor),
+        fontSize: 14,
+        color: textColor,
+        fontWeight: FontWeight.w500,
+      ),
+      bodyLarge: TextStyle(fontSize: 16, color: textColor),
+      bodyMedium: TextStyle(fontSize: 14, color: textColor),
+      bodySmall: TextStyle(fontSize: 12, color: textColor),
       labelLarge: TextStyle(
-          fontSize: 14.0, color: textColor, fontWeight: FontWeight.w500),
-      labelSmall: TextStyle(fontSize: 14.0, color: textColor),
+        fontSize: 14,
+        color: textColor,
+        fontWeight: FontWeight.w500,
+      ),
+      labelSmall: TextStyle(fontSize: 14, color: textColor),
     );
   }
 
@@ -48,20 +56,27 @@ class AppThemes {
       scaffoldBackgroundColor: backgroundColor,
       appBarTheme: AppBarTheme(
         color: backgroundColor,
-        iconTheme:
-            IconThemeData(color: isDarkMode ? Colors.white : Colors.black),
         titleTextStyle: isDarkMode
             ? const TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              )
             : const TextStyle(
-                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+        iconTheme: IconThemeData(
+          color: isDarkMode ? Colors.white : Colors.black,
+        ),
       ),
       tabBarTheme: TabBarTheme(
         unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
         labelColor: Colors.white,
       ),
-      iconTheme: IconThemeData(
-        color: secondaryColor,
+      iconTheme: const IconThemeData(
+        color: Colors.white,
       ),
       textTheme: textTheme,
       dividerTheme: const DividerThemeData(

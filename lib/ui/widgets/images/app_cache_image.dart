@@ -3,24 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_base/common/app_colors.dart';
 
 class AppCacheImage extends StatelessWidget {
+  const AppCacheImage({
+    super.key,
+    this.url = '',
+    this.width,
+    this.height,
+    this.borderRadius,
+    this.fit = BoxFit.cover,
+  });
   final String url;
   final double? width;
   final double? height;
   final double? borderRadius;
   final BoxFit fit;
 
-  const AppCacheImage({
-    super.key,
-    this.url = "",
-    this.width,
-    this.height,
-    this.borderRadius,
-    this.fit = BoxFit.cover,
-  });
-
   @override
   Widget build(BuildContext context) {
-    bool isValidUrl = Uri.tryParse(url)?.isAbsolute == true;
+    final isValidUrl = Uri.tryParse(url)?.isAbsolute ?? false;
     return Container(
       width: width ?? double.infinity,
       height: height ?? double.infinity,
@@ -42,7 +41,8 @@ class AppCacheImage extends StatelessWidget {
                         value: downloadProgress.progress,
                         backgroundColor: Colors.white,
                         valueColor: const AlwaysStoppedAnimation<Color>(
-                            AppColors.secondary),
+                          AppColors.secondary,
+                        ),
                       ),
                     ),
                   );

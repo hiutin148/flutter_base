@@ -1,58 +1,62 @@
+import 'package:flutter_base/models/entities/track/track_entity.dart';
 import 'package:flutter_base/models/enums/load_status.dart';
-import 'package:flutter_base/repositories/movie_repository.dart';
+import 'package:flutter_base/repositories/track_repository.dart';
+import 'package:flutter_base/ui/pages/home/home_navigator.dart';
+import 'package:flutter_base/ui/pages/home/home_state.dart';
 import 'package:flutter_base/utils/logger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'home_navigator.dart';
-import 'home_state.dart';
-
 class HomeCubit extends Cubit<HomeState> {
-  final HomeNavigator navigator;
-  final MovieRepository movieRepo;
-
   HomeCubit({
     required this.navigator,
-    required this.movieRepo,
+    required this.trackRepo,
   }) : super(const HomeState());
+  final HomeNavigator navigator;
+  final TrackRepository trackRepo;
 
-  void fetchInitialMovies() async {
+  Future<void> fetchInitialMovies() async {
     if (state.loadMovieStatus == LoadStatus.loading) {
       return;
     }
     emit(state.copyWith(loadMovieStatus: LoadStatus.loading));
-    await Future.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 1));
+
     try {
-      final result = await movieRepo.getMovies(page: 1);
-      emit(state.copyWith(
-        loadMovieStatus: LoadStatus.success,
-        movies: result.results,
-        page: result.page,
-        totalPages: result.totalPages,
-      ));
+      final response = await trackRepo.getFeaturedTracks(featured: true);
+      if (response != null) {
+        final tracks = response.results.map((e) => TrackEntity.fromJson(e as Map<String, dynamic>)).toList();
+        emit(
+          state.copyWith(
+            loadMovieStatus: LoadStatus.success,
+            featuredTracks: tracks,
+          ),
+        );
+      }
     } catch (e) {
       emit(state.copyWith(loadMovieStatus: LoadStatus.failure));
     }
   }
 
-  void fetchNextMovies() async {
+  Future<void> fetchNextMovies() async {
     if (state.page == state.totalPages) {
       return;
     }
     if (state.loadMovieStatus == LoadStatus.loadingMore) {
       return;
     }
-    emit(state.copyWith(
-      loadMovieStatus: LoadStatus.loadingMore,
-    ));
-    await Future.delayed(const Duration(seconds: 1));
+    emit(
+      state.copyWith(
+        loadMovieStatus: LoadStatus.loadingMore,
+      ),
+    );
+    await Future<void>.delayed(const Duration(seconds: 1));
     try {
-      final result = await movieRepo.getMovies(page: state.page + 1);
-      final resultList = state.movies..addAll(result.results);
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
           loadMovieStatus: LoadStatus.success,
-          movies: resultList,
-          page: result.page + 1,
-          totalPages: result.totalPages));
+          featuredTracks: [],
+        ),
+      );
     } catch (e) {
       logger.i(e.toString());
     }

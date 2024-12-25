@@ -5,6 +5,25 @@ import 'package:flutter_base/common/app_text_styles.dart';
 import 'package:flutter_base/ui/widgets/loading/app_loading_indicator.dart';
 
 class AppButton extends StatelessWidget {
+  const AppButton({
+    super.key,
+    this.title = '',
+    this.width = double.infinity,
+    this.height = AppDimens.buttonHeight,
+    this.borderWidth = 0,
+    this.cornerRadius = AppDimens.buttonCornerRadius,
+    this.borderColor,
+    this.backgroundColor = AppColors.buttonBGPrimary,
+    this.disableBackgroundColor = AppColors.buttonBGDisabled,
+    this.textStyle = AppTextStyle.white,
+    this.leadingIcon,
+    this.trailingIcon,
+    this.isLoading = false,
+    this.onPressed,
+    this.padding,
+    this.boxShadow,
+    this.isEnabled = true,
+  });
   //Attributes
   final String title;
   final double width;
@@ -31,26 +50,6 @@ class AppButton extends StatelessWidget {
   final List<BoxShadow>? boxShadow;
 
   final bool isEnabled;
-
-  const AppButton({
-    super.key,
-    this.title = "",
-    this.width = double.infinity,
-    this.height = AppDimens.buttonHeight,
-    this.borderWidth = 0,
-    this.cornerRadius = AppDimens.buttonCornerRadius,
-    this.borderColor,
-    this.backgroundColor = AppColors.buttonBGPrimary,
-    this.disableBackgroundColor = AppColors.buttonBGDisabled,
-    this.textStyle = AppTextStyle.white,
-    this.leadingIcon,
-    this.trailingIcon,
-    this.isLoading = false,
-    this.onPressed,
-    this.padding,
-    this.boxShadow,
-    this.isEnabled = true,
-  });
 
   @override
   Widget build(BuildContext context) {

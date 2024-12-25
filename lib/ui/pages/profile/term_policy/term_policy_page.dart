@@ -1,15 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_base/ui/widgets/appbar/app_bar_widget.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class TermPolicyPage extends StatefulWidget {
-  final String url;
-
   const TermPolicyPage({
     super.key,
     this.url = 'https://newwave.vn/vi/privacy-policy/',
   });
+
+  final String url;
 
   @override
   State<TermPolicyPage> createState() => _TermPolicyPageState();
@@ -35,12 +37,16 @@ class _TermPolicyPageState extends State<TermPolicyPage> {
             ),
             onRefresh: () async {
               if (defaultTargetPlatform == TargetPlatform.android) {
-                webViewController?.reload();
+                unawaited(webViewController?.reload());
               } else if (defaultTargetPlatform == TargetPlatform.iOS ||
                   defaultTargetPlatform == TargetPlatform.macOS) {
-                webViewController?.loadUrl(
-                    urlRequest:
-                        URLRequest(url: await webViewController?.getUrl()));
+                unawaited(
+                  webViewController?.loadUrl(
+                    urlRequest: URLRequest(
+                      url: await webViewController?.getUrl(),
+                    ),
+                  ),
+                );
               }
             },
           );
@@ -54,7 +60,7 @@ class _TermPolicyPageState extends State<TermPolicyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(title: "Term & Policy"),
+      appBar: const AppBarWidget(title: 'Term & Policy'),
       body: Stack(
         children: [
           InAppWebView(
@@ -65,7 +71,7 @@ class _TermPolicyPageState extends State<TermPolicyPage> {
               webViewController = controller;
             },
             onLoadStop: (controller, url) async {
-              pullToRefreshController?.endRefreshing();
+              unawaited(pullToRefreshController?.endRefreshing());
             },
             onReceivedError: (controller, request, error) {
               pullToRefreshController?.endRefreshing();

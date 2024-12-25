@@ -2,31 +2,31 @@ import 'package:flutter/material.dart';
 
 enum ProfileMenu {
   updateProfile(
-    name: "Update Profile",
+    name: 'Update Profile',
     icon: Icons.edit,
   ),
   changePassword(
-    name: "Change password",
+    name: 'Change password',
     icon: Icons.password_sharp,
   ),
   openPolicy(
-    name: "Term & Policy",
+    name: 'Term & Policy',
     icon: Icons.local_police_sharp,
   ),
   deleteAccount(
-    name: "Delete Account",
+    name: 'Delete Account',
     icon: Icons.delete,
   ),
   logout(
-    name: "Logout",
+    name: 'Logout',
     icon: Icons.logout,
   );
-
-  final String name;
-  final IconData icon;
 
   const ProfileMenu({
     required this.name,
     required this.icon,
   });
+
+  final String name;
+  final IconData icon;
 }

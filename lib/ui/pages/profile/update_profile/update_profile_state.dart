@@ -1,15 +1,14 @@
 part of 'update_profile_cubit.dart';
 
 class UpdateProfileState extends Equatable {
-  final LoadStatus updateUserStatus;
-  final UserEntity? user;
-  final DateTime? birthday;
-
   const UpdateProfileState({
     this.updateUserStatus = LoadStatus.initial,
     this.user,
     this.birthday,
   });
+  final LoadStatus updateUserStatus;
+  final UserEntity? user;
+  final DateTime? birthday;
 
   @override
   List<Object?> get props => [

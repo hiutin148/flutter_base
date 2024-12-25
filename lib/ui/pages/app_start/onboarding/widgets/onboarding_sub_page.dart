@@ -6,12 +6,11 @@ import 'package:flutter_base/common/app_text_styles.dart';
 import 'package:flutter_base/models/enums/onboarding_step.dart';
 
 class OnboardingSubPage extends StatelessWidget {
-  final OnboardingStep onboardingStep;
-
   const OnboardingSubPage({
-    super.key,
     required this.onboardingStep,
+    super.key,
   });
+  final OnboardingStep onboardingStep;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,6 @@ class OnboardingSubPage extends StatelessWidget {
       padding: const EdgeInsets.all(AppDimens.paddingNormal),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             width: 300,

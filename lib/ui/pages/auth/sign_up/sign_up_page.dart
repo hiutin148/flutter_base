@@ -61,8 +61,8 @@ class _SignUpChildPageState extends State<SignUpChildPage> {
     emailTextController = TextEditingController();
     passwordTextController = TextEditingController();
     confirmPasswordTextController = TextEditingController();
-    obscurePasswordController = ObscureTextController(obscureText: true);
-    obscureConfirmPasswordController = ObscureTextController(obscureText: true);
+    obscurePasswordController = ObscureTextController();
+    obscureConfirmPasswordController = ObscureTextController();
     super.initState();
   }
 
@@ -81,7 +81,6 @@ class _SignUpChildPageState extends State<SignUpChildPage> {
       child: Form(
         key: _formKey,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 156),
             const LogoWidget(),
@@ -94,7 +93,7 @@ class _SignUpChildPageState extends State<SignUpChildPage> {
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "S.current.full_name_empty";
+                  return 'S.current.full_name_empty';
                 }
                 return null;
               },
@@ -108,10 +107,10 @@ class _SignUpChildPageState extends State<SignUpChildPage> {
               },
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "S.current.email_empty";
+                  return 'S.current.email_empty';
                 }
                 if (!Utils.isEmail(value)) {
-                  return "S.current.email_invalid";
+                  return 'S.current.email_invalid';
                 }
                 return null;
               },
@@ -147,7 +146,7 @@ class _SignUpChildPageState extends State<SignUpChildPage> {
   Widget _buildSignUpButton() {
     return BlocBuilder<SignUpCubit, SignUpState>(
       builder: (context, state) {
-        final bool isEnable = (state.fullName ?? '').isNotEmpty &&
+        final isEnable = (state.fullName ?? '').isNotEmpty &&
             (state.email ?? '').isNotEmpty &&
             (state.password ?? '').isNotEmpty &&
             (state.confirmPassword ?? '').isNotEmpty;
@@ -162,7 +161,6 @@ class _SignUpChildPageState extends State<SignUpChildPage> {
                 color: Color(0x3D40BFFF),
                 blurRadius: 30,
                 offset: Offset(0, 10),
-                spreadRadius: 0,
               ),
           ],
         );
@@ -190,12 +188,13 @@ class _SignUpChildPageState extends State<SignUpChildPage> {
   void _signUp() {
     if (!_formKey.currentState!.validate()) {
       _cubit.navigator
-          .showErrorFlushbar(message: "Please enter correct information");
+          .showErrorFlushbar(message: 'Please enter correct information');
       return;
     }
     if (passwordTextController.text != confirmPasswordTextController.text) {
       _cubit.navigator.showErrorFlushbar(
-          message: "Password and Confirm Password do not match");
+        message: 'Password and Confirm Password do not match',
+      );
       return;
     }
     _cubit.signUp();

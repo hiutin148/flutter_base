@@ -15,6 +15,23 @@ class ObscureTextController extends ValueNotifier<bool> {
 }
 
 class AppPasswordTextField extends StatelessWidget {
+  const AppPasswordTextField({
+    required this.controller,
+    required this.obscureTextController,
+    super.key,
+    this.onFieldSubmitted,
+    this.validator,
+    this.onChanged,
+    this.labelText = 'Password',
+    this.hintText,
+    this.focusNode,
+    this.style,
+    this.padding,
+    this.hintStyle,
+    this.errorStyle,
+    this.enablePrefixIcon = false,
+    this.enableSuffixIcon = false,
+  });
   final TextEditingController controller;
   final ObscureTextController obscureTextController;
   final ValueChanged<String>? onChanged;
@@ -29,24 +46,6 @@ class AppPasswordTextField extends StatelessWidget {
   final TextStyle? errorStyle;
   final bool enablePrefixIcon;
   final bool enableSuffixIcon;
-
-  const AppPasswordTextField({
-    super.key,
-    required this.controller,
-    required this.obscureTextController,
-    this.onFieldSubmitted,
-    this.validator,
-    this.onChanged,
-    this.labelText = "Password",
-    this.hintText,
-    this.focusNode,
-    this.style,
-    this.padding,
-    this.hintStyle,
-    this.errorStyle,
-    this.enablePrefixIcon = false,
-    this.enableSuffixIcon = false,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,24 +62,24 @@ class AppPasswordTextField extends StatelessWidget {
             hintText: hintText,
             hintStyle: hintStyle ?? AppTextStyle.grayS14,
             focusedBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0)),
-              borderSide: BorderSide(color: AppColors.secondary, width: 1.0),
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(color: AppColors.secondary),
             ),
             enabledBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0)),
-              borderSide: BorderSide(color: AppColors.inputBorder, width: 1.0),
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(color: AppColors.inputBorder),
             ),
             disabledBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0)),
-              borderSide: BorderSide(color: AppColors.inputBorder, width: 1.0),
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(color: AppColors.inputBorder),
             ),
             errorBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0)),
-              borderSide: BorderSide(color: AppColors.error, width: 1.0),
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(color: AppColors.error),
             ),
             focusedErrorBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(0)),
-              borderSide: BorderSide(color: AppColors.error, width: 1.0),
+              borderRadius: BorderRadius.zero,
+              borderSide: BorderSide(color: AppColors.error),
             ),
             errorStyle: errorStyle ??
                 AppTextStyle.blackS12.copyWith(color: AppColors.error),
@@ -94,7 +93,7 @@ class AppPasswordTextField extends StatelessWidget {
                       return IconButton(
                         splashRadius: 24,
                         onPressed: () {
-                          Future.delayed(Duration.zero, () {
+                          Future<void>.delayed(Duration.zero, () {
                             focusNode?.unfocus();
                           });
                           obscureTextController.value = !obscureText;

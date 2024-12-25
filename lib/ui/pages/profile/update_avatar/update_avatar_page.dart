@@ -1,11 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_base/ui/pages/profile/update_avatar/update_avatar_cubit.dart';
 import 'package:flutter_base/ui/pages/profile/update_avatar/update_avatar_navigator.dart';
 import 'package:flutter_base/ui/widgets/images/app_circle_avatar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'update_avatar_cubit.dart';
 
 class UpdateAvatarPage extends StatelessWidget {
   const UpdateAvatarPage({
@@ -45,25 +45,28 @@ class _UpdateAvatarChildPageState extends State<UpdateAvatarChildPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Avatar"),
+        title: const Text('Avatar'),
         actions: [
           BlocBuilder<UpdateAvatarCubit, UpdateAvatarState>(
             builder: (context, state) {
               return _cubit.state.image == null
                   ? TextButton(
                       onPressed: () async {
-                        showOption(
+                        unawaited(
+                          showOption(
                             chooseImageCollection: () {},
-                            chooseImageCamera: () {});
+                            chooseImageCamera: () {},
+                          ),
+                        );
                       },
-                      child: const Text("thay đổi"),
+                      child: const Text('thay đổi'),
                     )
                   : TextButton(
                       onPressed: () async {},
-                      child: const Text("cập nhật"),
+                      child: const Text('cập nhật'),
                     );
             },
-          )
+          ),
         ],
       ),
       body: SafeArea(
@@ -93,8 +96,8 @@ class _UpdateAvatarChildPageState extends State<UpdateAvatarChildPage> {
   }
 
   Future<void> showOption({
-    required Function() chooseImageCollection,
-    required Function() chooseImageCamera,
+    required void Function() chooseImageCollection,
+    required void Function() chooseImageCamera,
   }) async {
     // AppBottomSheet.show(Container(
     //   height: 200,

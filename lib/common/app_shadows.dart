@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'app_colors.dart';
+import 'package:flutter_base/common/app_colors.dart';
 
 class AppShadow {
   AppShadow._();

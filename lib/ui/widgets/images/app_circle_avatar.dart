@@ -7,14 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AppCircleAvatar extends StatelessWidget {
-  final Size size;
-  final VoidCallback? onPressed;
-
   const AppCircleAvatar({
     super.key,
     this.size = const Size(34, 34),
     this.onPressed,
   });
+  final Size size;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +29,7 @@ class AppCircleAvatar extends StatelessWidget {
   }
 
   Widget _buildAvatar({String? avatarUrl}) {
-    bool isValidUrl = Uri.tryParse(avatarUrl ?? "")?.isAbsolute == true;
+    final isValidUrl = Uri.tryParse(avatarUrl ?? '')?.isAbsolute ?? false;
     return GestureDetector(
       onTap: onPressed,
       child: ClipOval(

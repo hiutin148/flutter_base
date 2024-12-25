@@ -1,11 +1,10 @@
+import 'package:flutter_base/configs/app_env_config.dart';
 import 'package:flutter_base/models/enums/language.dart';
-
-import 'app_env_config.dart';
 
 class AppConfigs {
   AppConfigs._();
 
-  static const String appName = "NEWWAVE";
+  static const String appName = 'NEWWAVE';
 
   static Environment env = Environment.prod;
 
@@ -28,13 +27,13 @@ class AppConfigs {
   static const dateTimeDisplayFormat = 'dd/MM/yyyy HH:mm';
 
   static const dateTimeAPIFormat =
-      "YYYY-MM-DDThh:mm:ssTZD"; //Use DateTime.parse(date) instead of ...
+      'YYYY-MM-DDThh:mm:ssTZD'; //Use DateTime.parse(date) instead of ...
   static const dateAPIFormat = 'dd/MM/yyyy';
 
   ///Date range
-  static final identityMinDate = DateTime(1900, 1, 1);
+  static final identityMinDate = DateTime(1900);
   static final identityMaxDate = DateTime.now();
-  static final birthMinDate = DateTime(1900, 1, 1);
+  static final birthMinDate = DateTime(1900);
   static final birthMaxDate = DateTime.now();
 
   ///Font
@@ -47,7 +46,7 @@ class AppConfigs {
 }
 
 class FirebaseConfig {
-  //Todo
+  // TODO: Do something
 }
 
 class DatabaseConfig {

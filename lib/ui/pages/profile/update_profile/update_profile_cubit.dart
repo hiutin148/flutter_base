@@ -8,11 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'update_profile_state.dart';
 
 class UpdateProfileCubit extends Cubit<UpdateProfileState> {
-  final UpdateProfileNavigator navigator;
-
   UpdateProfileCubit({
     required this.navigator,
   }) : super(const UpdateProfileState());
+  final UpdateProfileNavigator navigator;
 
   Future<void> updateData({
     required String name,

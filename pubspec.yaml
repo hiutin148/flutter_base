@@ -79,6 +79,10 @@ dependencies:
 
   alice_dio: ^1.0.6
   alice: ^1.0.0-dev.12
+  just_audio: ^0.9.42
+  palette_generator: ^0.3.3+5
+  flutter_local_notifications: ^17.2.4
+  audio_service: ^0.18.16
 
 dev_dependencies:
   flutter_test:
@@ -90,6 +94,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.1
   coverage: ^1.6.3
   mocktail: ^1.0.3
+  very_good_analysis: ^6.0.0
 
 flutter_icons:
   android: "ic_launcher"

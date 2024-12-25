@@ -1,21 +1,21 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_base/models/entities/movie_entity.dart';
+import 'package:flutter_base/models/entities/track/track_entity.dart';
 import 'package:flutter_base/models/enums/load_status.dart';
 
 class HomeState extends Equatable {
-  final LoadStatus loadMovieStatus;
-  final List<MovieEntity> movies;
-  final int page;
-  final int totalResults;
-  final int totalPages;
-
   const HomeState({
     this.loadMovieStatus = LoadStatus.initial,
-    this.movies = const [],
+    this.featuredTracks = const [],
     this.page = 1,
     this.totalResults = 0,
     this.totalPages = 0,
   });
+
+  final LoadStatus loadMovieStatus;
+  final List<TrackEntity> featuredTracks;
+  final int page;
+  final int totalResults;
+  final int totalPages;
 
   bool get hasReachedMax {
     return page >= totalPages;
@@ -24,7 +24,7 @@ class HomeState extends Equatable {
   @override
   List<Object?> get props => [
         loadMovieStatus,
-        movies,
+        featuredTracks,
         page,
         totalResults,
         totalPages,
@@ -32,14 +32,14 @@ class HomeState extends Equatable {
 
   HomeState copyWith({
     LoadStatus? loadMovieStatus,
-    List<MovieEntity>? movies,
+    List<TrackEntity>? featuredTracks,
     int? page,
     int? totalResults,
     int? totalPages,
   }) {
     return HomeState(
       loadMovieStatus: loadMovieStatus ?? this.loadMovieStatus,
-      movies: movies ?? this.movies,
+      featuredTracks: featuredTracks ?? this.featuredTracks,
       page: page ?? this.page,
       totalResults: totalResults ?? this.totalResults,
       totalPages: totalPages ?? this.totalPages,

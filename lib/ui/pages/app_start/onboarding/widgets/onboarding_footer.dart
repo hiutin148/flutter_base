@@ -4,9 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_base/common/app_dimens.dart';
 import 'package:flutter_base/generated/l10n.dart';
 import 'package:flutter_base/models/enums/onboarding_step.dart';
+import 'package:flutter_base/ui/pages/app_start/onboarding/widgets/onboarding_indicator.dart';
 import 'package:flutter_base/ui/widgets/buttons/app_text_button.dart';
-
-import 'onboarding_indicator.dart';
 
 class OnboardingController extends ValueNotifier<OnboardingStep> {
   OnboardingController({
@@ -19,18 +18,17 @@ class OnboardingController extends ValueNotifier<OnboardingStep> {
 }
 
 class OnboardingFooter extends StatelessWidget {
-  final int totalStep;
-  final OnboardingController controller;
-  final VoidCallback onSkipTapped;
-  final VoidCallback onNextTapped;
-
   const OnboardingFooter({
-    super.key,
     required this.totalStep,
     required this.controller,
     required this.onSkipTapped,
     required this.onNextTapped,
+    super.key,
   });
+  final int totalStep;
+  final OnboardingController controller;
+  final VoidCallback onSkipTapped;
+  final VoidCallback onNextTapped;
 
   @override
   Widget build(BuildContext context) {

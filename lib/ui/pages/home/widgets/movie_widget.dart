@@ -5,14 +5,13 @@ import 'package:flutter_base/models/entities/movie_entity.dart';
 import 'package:flutter_base/ui/widgets/images/app_cache_image.dart';
 
 class MovieWidget extends StatelessWidget {
-  final MovieEntity? movie;
-  final VoidCallback? onPressed;
-
   const MovieWidget({
     super.key,
     this.movie,
     this.onPressed,
   });
+  final MovieEntity? movie;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,6 @@ class MovieWidget extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     movie?.title ?? '',
@@ -55,7 +53,6 @@ class MovieWidget extends StatelessWidget {
       height: 120,
       child: AppCacheImage(
         url: movie?.posterUrl ?? '',
-        fit: BoxFit.cover,
       ),
     );
   }

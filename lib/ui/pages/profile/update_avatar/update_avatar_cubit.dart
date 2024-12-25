@@ -9,9 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'update_avatar_state.dart';
 
 class UpdateAvatarCubit extends Cubit<UpdateAvatarState> {
-  final UpdateAvatarNavigator navigator;
-
   UpdateAvatarCubit({
     required this.navigator,
   }) : super(const UpdateAvatarState());
+  final UpdateAvatarNavigator navigator;
 }

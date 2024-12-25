@@ -1,11 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class ProfileState extends Equatable {
-  final String version;
-
   const ProfileState({
     this.version = 'Unknown',
   });
+  final String version;
 
   @override
   List<Object?> get props => [

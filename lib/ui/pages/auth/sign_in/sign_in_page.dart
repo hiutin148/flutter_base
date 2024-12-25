@@ -8,6 +8,7 @@ import 'package:flutter_base/global_blocs/user/user_cubit.dart';
 import 'package:flutter_base/models/enums/load_status.dart';
 import 'package:flutter_base/repositories/auth_repository.dart';
 import 'package:flutter_base/repositories/user_repository.dart';
+import 'package:flutter_base/ui/pages/auth/sign_in/sign_in_cubit.dart';
 import 'package:flutter_base/ui/pages/auth/sign_in/sign_in_navigator.dart';
 import 'package:flutter_base/ui/widgets/buttons/app_button.dart';
 import 'package:flutter_base/ui/widgets/common/logo_widget.dart';
@@ -15,8 +16,6 @@ import 'package:flutter_base/ui/widgets/text_field/app_password_text_field.dart'
 import 'package:flutter_base/ui/widgets/text_field/app_text_field.dart';
 import 'package:flutter_base/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'sign_in_cubit.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -60,11 +59,11 @@ class _SignInChildPageState extends State<SignInChildPage> {
   void initState() {
     super.initState();
     emailTextController = TextEditingController(text: 'mobile@newwave.com');
-    passwordTextController = TextEditingController(text: "Aa@12345");
-    obscurePasswordController = ObscureTextController(obscureText: true);
+    passwordTextController = TextEditingController(text: 'Aa@12345');
+    obscurePasswordController = ObscureTextController();
     _cubit = BlocProvider.of<SignInCubit>(context);
-    _cubit.changeEmail(email: emailTextController.text);
-    _cubit.changePassword(password: passwordTextController.text);
+    _cubit..changeEmail(email: emailTextController.text)
+    ..changePassword(password: passwordTextController.text);
   }
 
   @override
@@ -100,7 +99,8 @@ class _SignInChildPageState extends State<SignInChildPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: AppDimens.paddingNormal),
+                  horizontal: AppDimens.paddingNormal,
+                ),
                 child: Text(
                   S.of(context).sign_in_email,
                   style: AppTextStyle.blackS14Medium,
@@ -109,7 +109,8 @@ class _SignInChildPageState extends State<SignInChildPage> {
               const SizedBox(height: 4),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: AppDimens.paddingNormal),
+                  horizontal: AppDimens.paddingNormal,
+                ),
                 child: AppTextField(
                   controller: emailTextController,
                   hintText: S.current.sign_in_email_hint,
@@ -119,10 +120,10 @@ class _SignInChildPageState extends State<SignInChildPage> {
                   },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "email_empty";
+                      return 'email_empty';
                     }
                     if (!Utils.isEmail(value)) {
-                      return "Email invalid";
+                      return 'Email invalid';
                     }
                     return null;
                   },
@@ -131,7 +132,8 @@ class _SignInChildPageState extends State<SignInChildPage> {
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: AppDimens.paddingNormal),
+                  horizontal: AppDimens.paddingNormal,
+                ),
                 child: Text(
                   S.of(context).sign_in_password,
                   style: AppTextStyle.blackS14Medium,
@@ -140,7 +142,8 @@ class _SignInChildPageState extends State<SignInChildPage> {
               const SizedBox(height: 4),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: AppDimens.paddingNormal),
+                  horizontal: AppDimens.paddingNormal,
+                ),
                 child: AppPasswordTextField(
                   controller: passwordTextController,
                   obscureTextController: obscurePasswordController,
@@ -178,7 +181,7 @@ class _SignInChildPageState extends State<SignInChildPage> {
   Widget _buildSignInButton() {
     return BlocBuilder<SignInCubit, SignInState>(
       builder: (context, state) {
-        final bool isEnable =
+        final isEnable =
             (state.email ?? '').isNotEmpty && (state.password ?? '').isNotEmpty;
         return AppButton(
           isEnabled: isEnable,
@@ -191,7 +194,6 @@ class _SignInChildPageState extends State<SignInChildPage> {
                 color: Color(0x3D40BFFF),
                 blurRadius: 30,
                 offset: Offset(0, 10),
-                spreadRadius: 0,
               ),
           ],
         );
@@ -227,7 +229,7 @@ class _SignInChildPageState extends State<SignInChildPage> {
   void _signIn() {
     if (!_formKey.currentState!.validate()) {
       _cubit.navigator
-          .showErrorFlushbar(message: "Please enter correct information");
+          .showErrorFlushbar(message: 'Please enter correct information');
       return;
     }
     _cubit.signIn();

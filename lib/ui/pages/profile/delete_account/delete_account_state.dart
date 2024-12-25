@@ -1,11 +1,10 @@
 part of 'delete_account_cubit.dart';
 
 class DeleteAccountState extends Equatable {
-  final LoadStatus deleteAccountStatus;
-
   const DeleteAccountState({
     this.deleteAccountStatus = LoadStatus.initial,
   });
+  final LoadStatus deleteAccountStatus;
 
   @override
   List<Object?> get props => [

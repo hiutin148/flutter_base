@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_base/database/secure_storage_helper.dart';
 import 'package:flutter_base/network/api_util.dart';
@@ -7,17 +9,26 @@ import 'package:go_router/go_router.dart';
 
 class ApiInterceptors extends QueuedInterceptorsWrapper {
   @override
-  void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+  Future<void> onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     final token = await SecureStorageHelper.instance.getToken();
     if (token != null) {
       options.headers['Authorization'] = 'Bearer ${token.accessToken}';
+    }
+    if (options.method == 'GET') {
+      options.queryParameters.addAll({'client_id': 'ca41a07a'});
+      options.queryParameters.addAll({'format': 'jsonpretty'});
     }
     super.onRequest(options, handler);
   }
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  void onResponse(
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
     //Handle section expired without refresh token
     // if (response.statusCode == 401) {
     //   _forceSignIn();
@@ -26,19 +37,23 @@ class ApiInterceptors extends QueuedInterceptorsWrapper {
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) async {
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     final statusCode = err.response?.statusCode;
     final path = err.requestOptions.path;
     final uri = err.requestOptions.uri;
-    final RequestOptions request = err.requestOptions;
+    final request = err.requestOptions;
     logger.e(
-        "⚠️ ERROR[$statusCode] => PATH: $path \n Response: ${err.response?.data}");
+      '⚠️ ERROR[$statusCode] => PATH: $path \n Response: ${err.response?.data}',
+    );
     switch (statusCode) {
       case 401:
         final savedToken = await SecureStorageHelper.instance.getToken();
-        String requestingTokens = err.requestOptions.headers['Authorization']
+        final requestingTokens = err.requestOptions.headers['Authorization']
             .toString()
-            .replaceFirst("Bearer ", "");
+            .replaceFirst('Bearer ', '');
         //Handle following request with old token
         if (savedToken != null && savedToken.accessToken != requestingTokens) {
           //Clone request with new token
@@ -58,7 +73,7 @@ class ApiInterceptors extends QueuedInterceptorsWrapper {
           final result = await ApiUtil.onRefreshToken(savedToken.refreshToken);
           if (result != null) {
             //Refresh success => clone current request
-            SecureStorageHelper.instance.saveToken(result);
+            unawaited(SecureStorageHelper.instance.saveToken(result));
             final cloneReq = await _cloneRequest(
               accessToken: result.accessToken,
               request: request,
@@ -67,14 +82,15 @@ class ApiInterceptors extends QueuedInterceptorsWrapper {
             return handler.resolve(cloneReq);
           } else {
             //Refresh failure => force login
-            logger.e("Response refresh token is null");
+            logger.e('Response refresh token is null');
             _forceSignIn();
             return handler.next(err);
           }
         } catch (e) {
           //Refresh failure => force login
           logger.e(
-              "Api refresh token error $e, msg: ${(e as DioException).response}");
+            'Api refresh token error $e, msg: ${(e as DioException).response}',
+          );
           _forceSignIn();
           return handler.next(err);
         }
@@ -83,7 +99,7 @@ class ApiInterceptors extends QueuedInterceptorsWrapper {
     }
   }
 
-  Future<Response> _cloneRequest({
+  Future<Response<dynamic>> _cloneRequest({
     required String accessToken,
     required RequestOptions request,
     required Uri uri,
@@ -93,7 +109,7 @@ class ApiInterceptors extends QueuedInterceptorsWrapper {
       headers: request.headers,
     );
     newOptions.headers!['Authorization'] = 'Bearer $accessToken';
-    return await ApiUtil.getDio().requestUri(
+    return ApiUtil.getDio().requestUri(
       uri,
       options: newOptions,
       data: request.data,

@@ -6,16 +6,15 @@ import 'package:flutter_base/common/app_text_styles.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  final bool showBackButton;
-  final VoidCallback? onBackPressed;
-
   const AppBarWidget({
-    super.key,
     required this.title,
+    super.key,
     this.showBackButton = true,
     this.onBackPressed,
   });
+  final String title;
+  final bool showBackButton;
+  final VoidCallback? onBackPressed;
 
   @override
   Widget build(BuildContext context) {

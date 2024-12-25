@@ -5,6 +5,18 @@ import 'package:flutter_base/common/app_text_styles.dart';
 import 'package:flutter_base/ui/widgets/loading/app_loading_indicator.dart';
 
 class AppTextButton extends StatelessWidget {
+  const AppTextButton({
+    super.key,
+    this.title = '',
+    this.titleColor = AppColors.textBlack,
+    this.width,
+    this.height = AppDimens.buttonHeight,
+    this.isLoading = false,
+    this.onPressed,
+    this.padding =
+        const EdgeInsets.symmetric(horizontal: AppDimens.paddingSmall),
+    this.isEnabled = true,
+  });
   //Attributes
   final String title;
   final Color titleColor;
@@ -18,19 +30,6 @@ class AppTextButton extends StatelessWidget {
 
   //Action & callback
   final VoidCallback? onPressed;
-
-  const AppTextButton({
-    super.key,
-    this.title = "",
-    this.titleColor = AppColors.textBlack,
-    this.width,
-    this.height = AppDimens.buttonHeight,
-    this.isLoading = false,
-    this.onPressed,
-    this.padding =
-        const EdgeInsets.symmetric(horizontal: AppDimens.paddingSmall),
-    this.isEnabled = true,
-  });
 
   @override
   Widget build(BuildContext context) {

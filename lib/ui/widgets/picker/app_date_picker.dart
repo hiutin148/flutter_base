@@ -18,7 +18,7 @@ class AppDatePicker {
   }) async {
     final firstDate = minDate ?? _firstDateDefault;
     final lastDate = maxDate ?? _lastDateDefault;
-    final DateTime? picker = await showDatePicker(
+    final picker = await showDatePicker(
       context: context,
       initialDate: initialDate,
       firstDate: firstDate,

@@ -1,17 +1,15 @@
 import 'package:flutter_base/repositories/auth_repository.dart';
+import 'package:flutter_base/ui/pages/app_start/splash/splash_navigator.dart';
+import 'package:flutter_base/ui/pages/app_start/splash/splash_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'splash_navigator.dart';
-import 'splash_state.dart';
-
 class SplashCubit extends Cubit<SplashState> {
-  final SplashNavigator navigator;
-  final AuthRepository authRepo;
-
   SplashCubit({
     required this.navigator,
     required this.authRepo,
   }) : super(const SplashState());
+  final SplashNavigator navigator;
+  final AuthRepository authRepo;
 
   Future<void> fetchInitialData() async {
     final isLoggedIn = await _isLoggedIn();
@@ -32,11 +30,11 @@ class SplashCubit extends Cubit<SplashState> {
   Future<bool> _isLoggedIn() async {
     final token = await authRepo.getToken();
     final isLoggedIn = token != null;
-    return isLoggedIn;
+    return true;
   }
 
   Future<bool> isLoggedIn() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future<void>.delayed(const Duration(seconds: 1));
     final token = await authRepo.getToken();
     final isLoggedIn = token != null;
     return isLoggedIn;

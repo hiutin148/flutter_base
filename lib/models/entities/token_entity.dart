@@ -4,18 +4,17 @@ part 'token_entity.g.dart';
 
 @JsonSerializable()
 class TokenEntity {
-  @JsonKey()
-  String accessToken;
-  @JsonKey()
-  String refreshToken;
-
   TokenEntity({
-    this.accessToken = "",
-    this.refreshToken = "",
+    this.accessToken = '',
+    this.refreshToken = '',
   });
 
   factory TokenEntity.fromJson(Map<String, dynamic> json) =>
       _$TokenEntityFromJson(json);
+  @JsonKey()
+  String accessToken;
+  @JsonKey()
+  String refreshToken;
 
   Map<String, dynamic> toJson() => _$TokenEntityToJson(this);
 }

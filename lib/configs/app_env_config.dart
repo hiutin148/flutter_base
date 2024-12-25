@@ -19,11 +19,11 @@ extension EnvironmentExt on Environment {
   String get baseUrl {
     switch (this) {
       case Environment.dev:
-        return "https://api.themoviedb.org";
+        return 'https://api.jamendo.com/v3.0';
       case Environment.stg:
-        return "https://api.themoviedb.org";
+        return 'https://api.jamendo.com/v3.0';
       case Environment.prod:
-        return "https://api.themoviedb.org";
+        return 'https://api.jamendo.com/v3.0';
     }
   }
 }

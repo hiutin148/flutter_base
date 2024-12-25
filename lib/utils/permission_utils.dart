@@ -11,12 +11,12 @@ class PermissionUtils {
 
     if (isSdkLessThan33) {
       if (context.mounted) {
-        return await requestStoragePermission(context);
+        return requestStoragePermission(context);
       }
     } else if (await Permission.photos.isGranted) {
       return true;
     } else {
-      var status = await Permission.photos.request();
+      final status = await Permission.photos.request();
       if (status.isGranted || status.isLimited) {
         return true;
       } else if (status.isPermanentlyDenied) {
@@ -32,7 +32,7 @@ class PermissionUtils {
     if (await Permission.storage.isGranted) {
       return true;
     } else {
-      var status = await Permission.storage.request();
+      final status = await Permission.storage.request();
       if (status.isGranted) {
         return true;
       } else if (status.isPermanentlyDenied) {
@@ -48,7 +48,7 @@ class PermissionUtils {
     if (await Permission.camera.isGranted) {
       return true;
     } else {
-      var status = await Permission.camera.request();
+      final status = await Permission.camera.request();
       if (status.isGranted) {
         return true;
       } else if (status.isPermanentlyDenied) {
@@ -61,7 +61,7 @@ class PermissionUtils {
   }
 
   static Future<void> showOpenAppSettingsDialog(BuildContext context) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       builder: (context) {
         return AlertDialog(

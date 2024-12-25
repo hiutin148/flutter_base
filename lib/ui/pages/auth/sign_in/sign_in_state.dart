@@ -1,15 +1,14 @@
 part of 'sign_in_cubit.dart';
 
 class SignInState extends Equatable {
-  final LoadStatus signInStatus;
-  final String? email;
-  final String? password;
-
   const SignInState({
     this.signInStatus = LoadStatus.initial,
     this.email,
     this.password,
   });
+  final LoadStatus signInStatus;
+  final String? email;
+  final String? password;
 
   @override
   List<Object?> get props => [

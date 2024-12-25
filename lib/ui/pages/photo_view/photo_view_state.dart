@@ -1,11 +1,10 @@
 part of 'photo_view_cubit.dart';
 
 class DetailMoviePhotoViewState extends Equatable {
-  final LoadStatus loadDataStatus;
-
   const DetailMoviePhotoViewState({
     this.loadDataStatus = LoadStatus.initial,
   });
+  final LoadStatus loadDataStatus;
 
   @override
   List<Object?> get props => [
