@@ -45,7 +45,6 @@ dependencies:
   device_info_plus: ^10.1.2
   package_info_plus: ^8.0.2
 
-
   #Store
   flutter_secure_storage: ^9.0.0
   shared_preferences: ^2.1.0
@@ -83,6 +82,10 @@ dependencies:
   palette_generator: ^0.3.3+5
   flutter_local_notifications: ^17.2.4
   audio_service: ^0.18.16
+
+  get_it:
+  miniplayer: ^1.0.1
+  persistent_bottom_nav_bar: ^6.2.1
 
 dev_dependencies:
   flutter_test:

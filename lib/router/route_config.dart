@@ -3,13 +3,12 @@ import 'package:alice/model/alice_configuration.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_base/common/app_navigator.dart';
-import 'package:flutter_base/models/entities/track/track_entity.dart';
 import 'package:flutter_base/ui/pages/app_start/onboarding/onboarding_page.dart';
 import 'package:flutter_base/ui/pages/app_start/splash/splash_page.dart';
 import 'package:flutter_base/ui/pages/auth/sign_up/sign_up_page.dart';
+import 'package:flutter_base/ui/pages/home/home_page.dart';
 import 'package:flutter_base/ui/pages/main/main_page.dart';
 import 'package:flutter_base/ui/pages/photo_view/photo_view_page.dart';
-import 'package:flutter_base/ui/pages/player/player_page.dart';
 import 'package:flutter_base/ui/pages/profile/change_password/change_password_page.dart';
 import 'package:flutter_base/ui/pages/profile/delete_account/delete_account_page.dart';
 import 'package:flutter_base/ui/pages/profile/profile_page.dart';
@@ -21,7 +20,9 @@ import 'package:go_router/go_router.dart';
 class AppRouter {
   AppRouter._();
 
-  static final navigationKey = GlobalKey<NavigatorState>();
+  static final homeNavigationKey = GlobalKey<NavigatorState>();
+  static final notificationNavigationKey = GlobalKey<NavigatorState>();
+  static final profileNavigationKey = GlobalKey<NavigatorState>();
   static Alice alice = Alice(
     configuration: AliceConfiguration(
       showNotification: false,
@@ -31,15 +32,18 @@ class AppRouter {
   static final GoRouter router = GoRouter(
     routes: _routes,
     debugLogDiagnostics: true,
+    initialLocation: splash,
     navigatorKey: alice.getNavigatorKey(),
   );
 
   ///main page
   static const String splash = '/';
   static const String onBoarding = 'on_boarding';
-  static const String home = 'main';
+  static const String home = 'home';
   static const String signIn = 'sign_in';
   static const String signUp = 'sign_up';
+  static const String notification = 'notification';
+
   static const String notificationList = 'notification_list';
   static const String notificationDetail = 'notification_detail';
   static const String photoView = 'photo_view';
@@ -63,11 +67,6 @@ class AppRouter {
           builder: (context, state) => const OnboardingPage(),
         ),
         GoRoute(
-          name: home,
-          path: home,
-          builder: (context, state) => const MainPage(),
-        ),
-        GoRoute(
           name: signIn,
           path: signIn,
           builder: (context, state) => SignInScreen(
@@ -76,7 +75,9 @@ class AppRouter {
             ],
             actions: [
               AuthStateChangeAction<SignedIn>((context, state) {
-                AppNavigator(context: context).pushReplacementNamed(AppRouter.home);
+                AppNavigator(context: context).pushReplacementNamed(
+                  AppRouter.home,
+                );
               }),
             ],
           ),
@@ -86,49 +87,82 @@ class AppRouter {
           path: signUp,
           builder: (context, state) => const SignUpPage(),
         ),
-        GoRoute(
-          name: photoView,
-          path: photoView,
-          builder: (context, state) => PhotoViewPage(
-            arguments: PhotoViewArguments(images: state.extra! as List<String>),
-          ),
-        ),
-        GoRoute(
-          name: updateProfile,
-          path: updateProfile,
-          builder: (context, state) => const UpdateProfilePage(),
-        ),
-        GoRoute(
-          name: updateAvatar,
-          path: updateAvatar,
-          builder: (context, state) => const UpdateAvatarPage(),
-        ),
-        GoRoute(
-          name: profile,
-          path: profile,
-          builder: (context, state) => const ProfilePage(),
-        ),
-        GoRoute(
-          name: deleteAccount,
-          path: deleteAccount,
-          builder: (context, state) => const DeleteAccountPage(),
-        ),
-        GoRoute(
-          name: changePassword,
-          path: changePassword,
-          builder: (context, state) => const ChangePasswordPage(),
-        ),
-        GoRoute(
-          name: termPolicy,
-          path: termPolicy,
-          builder: (context, state) => const TermPolicyPage(),
-        ),
-        GoRoute(
-          name: player,
-          path: player,
-          builder: (context, state) => PlayerPage(
-            track: state.extra! as TrackEntity,
-          ),
+        StatefulShellRoute.indexedStack(
+          builder: (context, state, navigationShell) {
+            return MainPage(
+              navigationShell: navigationShell,
+            );
+          },
+          branches: [
+            StatefulShellBranch(
+              navigatorKey: homeNavigationKey,
+              routes: [
+                GoRoute(
+                  name: home,
+                  path: home,
+                  builder: (context, state) => const HomePage(),
+                  routes: [
+                    GoRoute(
+                      name: photoView,
+                      path: photoView,
+                      builder: (context, state) => PhotoViewPage(
+                        arguments: PhotoViewArguments(
+                          images: state.extra! as List<String>,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              navigatorKey: notificationNavigationKey,
+              routes: [
+                GoRoute(
+                  name: notification,
+                  path: notification,
+                  builder: (context, state) => const Placeholder(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              navigatorKey: profileNavigationKey,
+              routes: [
+                GoRoute(
+                  name: profile,
+                  path: profile,
+                  builder: (context, state) => const ProfilePage(),
+                  routes: [
+                    GoRoute(
+                      name: updateProfile,
+                      path: updateProfile,
+                      builder: (context, state) => const UpdateProfilePage(),
+                    ),
+                    GoRoute(
+                      name: updateAvatar,
+                      path: updateAvatar,
+                      builder: (context, state) => const UpdateAvatarPage(),
+                    ),
+                    GoRoute(
+                      name: deleteAccount,
+                      path: deleteAccount,
+                      builder: (context, state) => const DeleteAccountPage(),
+                    ),
+                    GoRoute(
+                      name: changePassword,
+                      path: changePassword,
+                      builder: (context, state) => const ChangePasswordPage(),
+                    ),
+                    GoRoute(
+                      name: termPolicy,
+                      path: termPolicy,
+                      builder: (context, state) => const TermPolicyPage(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     ),

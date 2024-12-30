@@ -19,7 +19,8 @@ class Utils {
     String subject,
     String body,
   ) async {
-    final url = 'mailto:$emailAddress?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}';
+    final url =
+        'mailto:$emailAddress?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}';
 
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
@@ -59,7 +60,8 @@ class Utils {
     // Define a regular expression pattern for password validation.
     // This regex requires at least 8 characters, one uppercase letter, one lowercase letter,
     // one digit, and one special character.
-    const passwordRegex = r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$';
+    const passwordRegex =
+        r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$';
     return RegExp(passwordRegex).hasMatch(input);
   }
 
@@ -67,7 +69,8 @@ class Utils {
   static bool isPhoneNumber(String input) {
     // Regular expression pattern to match phone numbers
     // This pattern allows for common phone number formats
-    const phoneRegex = r'^\+?(\d{1,4})?[-.\s]?(\d{1,3})[-.\s]?(\d{1,3})[-.\s]?(\d{1,9})$';
+    const phoneRegex =
+        r'^\+?(\d{1,4})?[-.\s]?(\d{1,3})[-.\s]?(\d{1,3})[-.\s]?(\d{1,9})$';
     // Create a regular expression object
     final regex = RegExp(phoneRegex);
     // Check if the input matches the phone number pattern

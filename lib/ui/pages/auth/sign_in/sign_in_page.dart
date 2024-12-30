@@ -62,8 +62,9 @@ class _SignInChildPageState extends State<SignInChildPage> {
     passwordTextController = TextEditingController(text: 'Aa@12345');
     obscurePasswordController = ObscureTextController();
     _cubit = BlocProvider.of<SignInCubit>(context);
-    _cubit..changeEmail(email: emailTextController.text)
-    ..changePassword(password: passwordTextController.text);
+    _cubit
+      ..changeEmail(email: emailTextController.text)
+      ..changePassword(password: passwordTextController.text);
   }
 
   @override

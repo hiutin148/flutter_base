@@ -13,7 +13,8 @@ class Headers {
     required this.warnings,
   });
 
-  factory Headers.fromJson(Map<String, dynamic> json) => _$HeadersFromJson(json);
+  factory Headers.fromJson(Map<String, dynamic> json) =>
+      _$HeadersFromJson(json);
   @JsonKey(name: 'code')
   final int code;
   @JsonKey(name: 'error_message')

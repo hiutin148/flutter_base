@@ -1,13 +1,9 @@
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'track_entity.g.dart';
 
 @JsonSerializable()
 class TrackEntity {
-
-  factory TrackEntity.fromJson(Map<String, dynamic> json) => _$TrackEntityFromJson(json);
-
   TrackEntity({
     required this.albumId,
     required this.albumImage,
@@ -30,6 +26,9 @@ class TrackEntity {
     required this.shorturl,
     required this.waveform,
   });
+
+  factory TrackEntity.fromJson(Map<String, dynamic> json) =>
+      _$TrackEntityFromJson(json);
   @JsonKey(name: 'album_id')
   final String albumId;
   @JsonKey(name: 'album_image')
@@ -70,6 +69,6 @@ class TrackEntity {
   final String shorturl;
   @JsonKey(name: 'waveform')
   final String waveform;
-  
+
   Map<String, dynamic> toJson() => _$TrackEntityToJson(this);
 }

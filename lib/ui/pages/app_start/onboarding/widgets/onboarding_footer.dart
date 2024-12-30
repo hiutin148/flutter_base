@@ -12,7 +12,7 @@ class OnboardingController extends ValueNotifier<OnboardingStep> {
     OnboardingStep step = OnboardingStep.step1,
   }) : super(step);
 
-  void jumpToStep({required OnboardingStep step}) {
+  Future<void> jumpToStep({required OnboardingStep step}) async {
     value = step;
   }
 }

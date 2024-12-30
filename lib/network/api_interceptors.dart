@@ -120,10 +120,11 @@ class ApiInterceptors extends QueuedInterceptorsWrapper {
     //Clear session
     SecureStorageHelper.instance.removeToken();
     //Open sign-in page
-    while (GoRouter.of(AppRouter.navigationKey.currentContext!).canPop()) {
-      GoRouter.of(AppRouter.navigationKey.currentContext!).pop();
+    while (GoRouter.of(AppRouter.alice.getNavigatorKey()!.currentContext!)
+        .canPop()) {
+      GoRouter.of(AppRouter.alice.getNavigatorKey()!.currentContext!).pop();
     }
-    GoRouter.of(AppRouter.navigationKey.currentContext!)
+    GoRouter.of(AppRouter.alice.getNavigatorKey()!.currentContext!)
         .pushReplacementNamed(AppRouter.signIn);
   }
 }

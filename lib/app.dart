@@ -14,6 +14,7 @@ import 'package:flutter_base/repositories/auth_repository.dart';
 import 'package:flutter_base/repositories/track_repository.dart';
 import 'package:flutter_base/repositories/user_repository.dart';
 import 'package:flutter_base/router/route_config.dart';
+import 'package:flutter_base/ui/pages/main/main_cubit.dart';
 import 'package:flutter_base/ui/widgets/loading/app_loading_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -76,7 +77,8 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<UserCubit>(
             create: (context) {
-              final userRepository = RepositoryProvider.of<UserRepository>(context);
+              final userRepository =
+                  RepositoryProvider.of<UserRepository>(context);
               return UserCubit(userRepository: userRepository);
             },
           ),
@@ -87,8 +89,11 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<PlayerControllerCubit>(
             create: (context) {
-              return PlayerControllerCubit()..initializeAudioPlayer();
+              return PlayerControllerCubit();
             },
+          ),
+          BlocProvider<MainCubit>(
+            create: (BuildContext context) => MainCubit(),
           ),
         ],
         child: BlocBuilder<AppSettingCubit, AppSettingState>(

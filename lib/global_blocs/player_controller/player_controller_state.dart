@@ -2,31 +2,22 @@ part of 'player_controller_cubit.dart';
 
 class PlayerControllerState extends Equatable {
   const PlayerControllerState({
-    this.duration = Duration.zero,
-    this.positionStream,
-    this.playing = false,
+    this.playingSong,
   });
 
-  final Duration duration;
-  final Stream<Duration>? positionStream;
-  final bool playing;
+  final MediaItem? playingSong;
 
   @override
   List<Object?> get props => [
-        duration,
-        positionStream,
-        playing,
+        playingSong,
       ];
 
   PlayerControllerState copyWith({
-    Duration? duration,
-    Stream<Duration>? positionStream,
     bool? playing,
+    MediaItem? playingSong,
   }) {
     return PlayerControllerState(
-      duration: duration ?? this.duration,
-      positionStream: positionStream ?? this.positionStream,
-      playing: playing ?? this.playing,
+      playingSong: playingSong ?? this.playingSong,
     );
   }
 }

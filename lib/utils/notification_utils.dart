@@ -1,12 +1,17 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-Future<void> onDidReceiveNotificationResponse(NotificationResponse notificationResponse) async {
+Future<void> onDidReceiveNotificationResponse(
+  NotificationResponse notificationResponse,
+) async {
   final payload = notificationResponse.payload;
-  if (notificationResponse.payload != null) {}
+  if (notificationResponse.payload != null) {
+    print(payload);
+  }
 }
 
 class NotificationUtils {
-  static late final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  static late final FlutterLocalNotificationsPlugin
+      flutterLocalNotificationsPlugin;
 
   static Future<void> initializeLocalNotifications() async {
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -30,12 +35,6 @@ class NotificationUtils {
       initializationSettings,
       onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
     );
-    await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
-    await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.requestNotificationsPermission();
   }
 
   static Future<void> showNotification() async {
@@ -43,9 +42,10 @@ class NotificationUtils {
       'your channel id',
       'your channel name',
       channelDescription: 'your channel description',
-      importance: Importance.max,
-      priority: Priority.high,
       ticker: 'ticker',
+      styleInformation: BigPictureStyleInformation(
+        DrawableResourceAndroidBitmap('ic_launcher'),
+      ),
     );
     const notificationDetails = NotificationDetails(
       android: androidNotificationDetails,

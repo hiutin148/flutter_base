@@ -1,16 +1,15 @@
 import 'dart:async';
 
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_base/common/app_colors.dart';
 import 'package:flutter_base/common/app_dimens.dart';
 import 'package:flutter_base/configs/app_configs.dart';
 import 'package:flutter_base/global_blocs/player_controller/player_controller_cubit.dart';
 import 'package:flutter_base/global_blocs/user/user_cubit.dart';
-import 'package:flutter_base/models/entities/track/track_entity.dart';
 import 'package:flutter_base/models/entities/user/user_entity.dart';
 import 'package:flutter_base/models/enums/load_status.dart';
 import 'package:flutter_base/repositories/track_repository.dart';
-import 'package:flutter_base/router/route_config.dart';
 import 'package:flutter_base/ui/pages/home/home_cubit.dart';
 import 'package:flutter_base/ui/pages/home/home_navigator.dart';
 import 'package:flutter_base/ui/pages/home/home_state.dart';
@@ -20,8 +19,6 @@ import 'package:flutter_base/ui/widgets/list/list_loading_widget.dart';
 import 'package:flutter_base/utils/extensions/text_style_extension.dart';
 import 'package:flutter_base/utils/extensions/theme_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:loader_overlay/loader_overlay.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -49,7 +46,8 @@ class HomeChildPage extends StatefulWidget {
   State<HomeChildPage> createState() => _HomeChildPageState();
 }
 
-class _HomeChildPageState extends State<HomeChildPage> with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _HomeChildPageState extends State<HomeChildPage>
+    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   @override
   bool get wantKeepAlive => true;
   final _scrollController = ScrollController();
@@ -70,11 +68,6 @@ class _HomeChildPageState extends State<HomeChildPage> with AutomaticKeepAliveCl
     return Scaffold(
       body: SafeArea(
         child: _buildBodyWidget(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          AppRouter.alice.showInspector();
-        },
       ),
     );
   }
@@ -99,7 +92,7 @@ class _HomeChildPageState extends State<HomeChildPage> with AutomaticKeepAliveCl
     );
   }
 
-  Widget _buildSuccessList(List<TrackEntity> items) {
+  Widget _buildSuccessList(List<MediaItem> items) {
     return RefreshIndicator(
       onRefresh: _onRefreshData,
       child: Padding(
@@ -128,7 +121,7 @@ class _HomeChildPageState extends State<HomeChildPage> with AutomaticKeepAliveCl
                     const Icon(Icons.search),
                     const SizedBox(width: AppDimens.paddingNormal),
                     Text(
-                      'Discover new movies',
+                      'Discover new tracks',
                       style: context.textTheme.bodyMedium?.copyWith(
                         color: Colors.black.withOpacity(0.5),
                       ),
@@ -142,27 +135,14 @@ class _HomeChildPageState extends State<HomeChildPage> with AutomaticKeepAliveCl
                 final item = items[index];
                 return InkWell(
                   onTap: () async {
-                    if (context.mounted) {
-                      unawaited(
-                        context.pushNamed(
-                          AppRouter.player,
-                          extra: item,
-                        ),
-                      );
-                    }
-                    context.loaderOverlay.show();
-                    unawaited(BlocProvider.of<PlayerControllerCubit>(context)
-                        .play(
-                      item.audio,
-                    )
-                        .then(
-                      (value) {
-                        context.loaderOverlay.hide();
-                      },
-                    ));
+                    unawaited(
+                      BlocProvider.of<PlayerControllerCubit>(context).play(
+                        index,
+                      ),
+                    );
                   },
                   child: ListTile(
-                    title: Text(item.name),
+                    title: Text(item.title),
                   ),
                 );
               },

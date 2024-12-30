@@ -1,66 +1,60 @@
 import 'dart:async';
-
+import 'package:audio_service/audio_service.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_base/utils/notification_utils.dart';
+import 'package:flutter_base/locator.dart';
+import 'package:flutter_base/utils/my_audio_handler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:just_audio/just_audio.dart';
 
 part 'player_controller_state.dart';
 
 class PlayerControllerCubit extends Cubit<PlayerControllerState> {
   PlayerControllerCubit() : super(const PlayerControllerState());
-  late AudioPlayer audioPlayer;
 
-  void initializeAudioPlayer() {
-    audioPlayer = AudioPlayer();
-  }
+  final MyAudioHandler myAudioHandler = sl<MyAudioHandler>();
 
-  Future<void> play(String url) async {
-    unawaited(NotificationUtils.showNotification());
-    if (state.playing == true) {
-      await audioPlayer.stop();
-      emit(
-        state.copyWith(
-          playing: false,
-        ),
-      );
+  Future<void> play(int index) async {
+    if (myAudioHandler.mediaItem.value != null &&
+        myAudioHandler.queue.value.indexOf(
+              myAudioHandler.mediaItem.value!,
+            ) ==
+            index) {
+      return;
     }
-    final duration = await audioPlayer.setUrl(url);
-    unawaited(audioPlayer.play());
+    if (myAudioHandler.playbackState.value.playing == true) {
+      await myAudioHandler.stop();
+    }
+    await myAudioHandler.skipToQueueItem(index);
+    unawaited(myAudioHandler.play());
     emit(
       state.copyWith(
-        duration: duration,
-        positionStream: audioPlayer.positionStream,
-        playing: true,
+        playingSong: myAudioHandler.mediaItem.value,
       ),
     );
   }
 
   void togglePauseResume() {
-    if (state.playing) {
-      audioPlayer.pause();
-      emit(
-        state.copyWith(
-          playing: false,
-        ),
-      );
+    if (myAudioHandler.playbackState.value.playing) {
+      myAudioHandler.pause();
     } else {
-      audioPlayer.play();
-      emit(
-        state.copyWith(
-          playing: true,
-        ),
-      );
+      myAudioHandler.play();
+    }
+  }
+
+  void next() {
+    myAudioHandler.skipToNext();
+    if (!myAudioHandler.playbackState.value.playing) {
+      myAudioHandler.play();
+    }
+  }
+
+  void previous() {
+    myAudioHandler.skipToPrevious();
+    if (!myAudioHandler.playbackState.value.playing) {
+      myAudioHandler.play();
     }
   }
 
   Future<void> seek(double position) async {
-    await audioPlayer.seek(Duration(seconds: position.toInt()));
-  }
-
-  @override
-  Future<void> close() {
-    audioPlayer.dispose();
-    return super.close();
+    await myAudioHandler.seek(Duration(seconds: position.toInt()));
   }
 }

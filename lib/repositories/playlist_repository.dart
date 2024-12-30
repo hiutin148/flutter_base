@@ -2,15 +2,15 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter_base/models/entities/track/track_entity.dart';
 import 'package:flutter_base/network/api_client.dart';
 
-abstract class TrackRepository {
+abstract class PlaylistRepository {
   Future<List<MediaItem>?> getFeaturedTracks({
     int? limit,
     bool? featured,
   });
 }
 
-class TrackRepositoryImpl extends TrackRepository {
-  TrackRepositoryImpl({required this.apiClient});
+class PlaylistRepositoryImpl extends PlaylistRepository {
+  PlaylistRepositoryImpl({required this.apiClient});
 
   ApiClient apiClient;
 

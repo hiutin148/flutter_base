@@ -48,17 +48,25 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   }
 
   Future<void> initSongs({required List<MediaItem> songs}) async {
-    audioPlayer.playbackEventStream.listen(_broadcastState);
-    final audioSource = songs.map(_createAudioSource);
-    await audioPlayer.setAudioSource(ConcatenatingAudioSource(children: audioSource.toList()));
-    final newQueue = queue.value..addAll(songs);
-    queue.add(newQueue);
-    _listenForCurrentSongIndexChange();
-    audioPlayer.processingStateStream.listen(
-      (state) {
-        if (state == ProcessingState.completed) skipToNext();
-      },
-    );
+    try {
+      audioPlayer.playbackEventStream.listen(_broadcastState);
+      final audioSource = songs.map(_createAudioSource);
+      await audioPlayer.setAudioSource(
+        ConcatenatingAudioSource(
+          children: audioSource.toList(),
+        ),
+      );
+      final newQueue = queue.value..addAll(songs);
+      queue.add(newQueue);
+      _listenForCurrentSongIndexChange();
+      audioPlayer.processingStateStream.listen(
+        (state) {
+          if (state == ProcessingState.completed) skipToNext();
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override

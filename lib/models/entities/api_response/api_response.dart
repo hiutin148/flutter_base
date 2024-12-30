@@ -7,7 +7,8 @@ part 'api_response.g.dart';
 class ApiResponse {
   ApiResponse({required this.headers, required this.results});
 
-  factory ApiResponse.fromJson(Map<String, dynamic> json) => _$ApiResponseFromJson(json);
+  factory ApiResponse.fromJson(Map<String, dynamic> json) =>
+      _$ApiResponseFromJson(json);
   @JsonKey(name: 'headers')
   final Headers headers;
   @JsonKey(name: 'results')

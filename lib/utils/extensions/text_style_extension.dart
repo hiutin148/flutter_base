@@ -7,5 +7,4 @@ extension TextStyleExtension on TextStyle {
   /// Color
   TextStyle get white => copyWith(color: Colors.white);
   TextStyle get white67 => copyWith(color: Colors.white.withOpacity(0.67));
-
 }

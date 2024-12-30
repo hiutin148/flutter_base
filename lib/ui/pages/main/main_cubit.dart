@@ -8,4 +8,8 @@ class MainCubit extends Cubit<MainState> {
   void switchTap(int index) {
     emit(state.copyWith(selectedIndex: index));
   }
+
+  void toggleBottomNavVisibility(bool visible) {
+    emit(state.copyWith(showBottomNav: visible));
+  }
 }

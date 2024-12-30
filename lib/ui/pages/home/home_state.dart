@@ -1,5 +1,5 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_base/models/entities/track/track_entity.dart';
 import 'package:flutter_base/models/enums/load_status.dart';
 
 class HomeState extends Equatable {
@@ -12,7 +12,7 @@ class HomeState extends Equatable {
   });
 
   final LoadStatus loadMovieStatus;
-  final List<TrackEntity> featuredTracks;
+  final List<MediaItem> featuredTracks;
   final int page;
   final int totalResults;
   final int totalPages;
@@ -32,7 +32,7 @@ class HomeState extends Equatable {
 
   HomeState copyWith({
     LoadStatus? loadMovieStatus,
-    List<TrackEntity>? featuredTracks,
+    List<MediaItem>? featuredTracks,
     int? page,
     int? totalResults,
     int? totalPages,

@@ -13,7 +13,15 @@ abstract class ApiClient {
   Future<ApiResponse> getFeaturedTracks({
     @Query('limit') int limit = 5,
     @Query('featured') bool? featured,
-});
+  });
+
+  /// Feeds
+  @GET('/feeds/')
+  Future<ApiResponse> getFeedPlaylists({
+    @Query('limit') int limit = 5,
+    @Query('type') String type = 'playlist',
+    @Query('order') String order = 'position_asc',
+  });
 
   @POST('/logout')
   Future<dynamic> signOut(@Body() Map<String, dynamic> body);

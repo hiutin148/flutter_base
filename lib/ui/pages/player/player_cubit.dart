@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'player_state.dart';
 
 class PlayerCubit extends Cubit<PlayerState> {
-
   PlayerCubit({
     required this.navigator,
   }) : super(const PlayerState());
@@ -17,7 +16,7 @@ class PlayerCubit extends Cubit<PlayerState> {
     try {
       //Todo: add API calls
       emit(state.copyWith(loadDataStatus: LoadStatus.success));
-    } catch (e, s) {
+    } catch (e) {
       //Todo: should print exception here
       emit(state.copyWith(loadDataStatus: LoadStatus.failure));
     }
